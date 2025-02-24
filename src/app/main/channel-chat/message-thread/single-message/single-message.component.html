@@ -1,0 +1,186 @@
+<section>
+    @if (!isThread) {
+    <div class="divider">
+        <div class="lineDiv">
+            <hr>
+        </div>
+        <div class="date" *ngIf="shouldShowDateDivider(index)">{{ getFormattedDate(currentMessage.timeStamp) }}</div>
+        <div class="lineDiv">
+            <hr>
+        </div>
+    </div>
+    }
+
+    @if (this.uiService.content === 'directMessage' || 'channelChat') {
+
+    <div [ngClass]="authService.currentUserSig()?.uid === currentMessage.senderId ? 'myMessageBox': 'replyMessageBox'">
+        <div [ngClass]="{'replyMessageDetails': authService.currentUserSig()?.uid !== currentMessage.senderId }"
+            class="messageDetails"
+            [ngClass]="{'edit-messageDetails': editMode, 'reply-details': authService.currentUserSig()?.uid !== currentMessage.senderId}">
+            <div class="messageInfo"
+                [ngClass]="{'flex-reverse': authService.currentUserSig()?.uid !== currentMessage.senderId}">
+                <p>{{ getFormattedTime(currentMessage.timeStamp) }}</p>
+                @if (authService.currentUserSig()?.uid === currentMessage.senderId) {
+                <p>{{ authService.currentUserSig()?.username }}</p>
+                }
+                @else {
+                <p *ngIf="findUserWithId(currentMessage.senderId); else notFound">
+                    {{ findUserWithId(currentMessage.senderId)?.username }}
+                </p>
+                <ng-template #notFound>user not found</ng-template>
+                }
+
+            </div>
+            @if (!editMode) {
+            <div class="messageText"
+                [ngClass]="{'replyMessageText': authService.currentUserSig()?.uid !== currentMessage.senderId }">
+                {{ currentMessage.text }}
+            </div>
+            }
+            @if (editMode) {
+            <div class="editDiv">
+                <form id="editForm" #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
+                    <textarea name="edit-input" [(ngModel)]="editText" required #editTextArea></textarea>
+                </form>
+                <div class="editBtnDiv">
+                    <button class="btn-blue btn-editMsg" [disabled]="!editForm.valid" type="submit"
+                        form="editForm">Speichern</button>
+                    <button class="btn-white btn-editMsg" (click)="cancelEditArea()">Abbrechen</button>
+                </div>
+            </div>
+            }
+            <div class="bottomBox">
+                @if (!isThread) {
+                <div class="answerBox">
+                    <span class="answer" (click)="uiService.setMsg(currentMessage)" (click)="this.openThread()"
+                        [ngClass]="{'mobile-font': breakpointObserver.isXSmallOrSmall}">
+                        @if ((uiService.findThread(currentMessage)?.messages?.length ?? 0) > 0) {
+                        <span>{{ uiService.findThread(currentMessage)?.messages?.length }}</span>
+                        }
+                        @if ((uiService.findThread(currentMessage)?.messages?.length)==1) {
+                        Antwort
+                        } @else{
+                        Antworten
+                        }
+                    </span>
+
+                    @if ((uiService.findThread(currentMessage)?.messages?.length ?? 0) > 0) {
+                    <p>
+                        <span [ngClass]="{'d-none': breakpointObserver.isXSmallOrSmall}">Letzte Antwort</span>
+                        {{ this.uiService.formatTimeFromTimestamp(uiService.findLastAnswer(currentMessage)?.timeStamp)
+                        }}
+                    </p>
+                    }
+
+                </div>
+                }
+                <div class="reactionBox"
+                    [ngClass]="{'replayReactionBox': authService.currentUserSig()?.uid !== currentMessage.senderId }">
+                    @for (reaction of currentMessage.reactions; track $index; let index = $index) {
+                    <div class="emojiBox" (click)="manageDeleteEmoji()" (mouseleave)="onMouseLeave()"
+                        (mouseover)="onMouseOver()">
+                        <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+                        <p>{{ reaction.counter }}</p>
+                        <div class="whoReactInfo"
+                            [ngClass]="{'whoReactInfoReply': authService.currentUserSig()?.uid == currentMessage.senderId }">
+                            <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+
+                            <div class="reacteduser" *ngFor="let username of reaction.reactedUser | keyvalue">
+                                <span *ngIf="this.authService.currentUserSig()?.username === username.key">Du</span>
+                                <span *ngIf="this.authService.currentUserSig()?.username !== username.key">{{
+                                    username.key }}</span>
+                            </div>
+                            <span class="plural">{{ checkPlural(reaction) }}</span>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @if (authService.currentUserSig()?.uid == currentMessage.senderId) {
+        <img [ngStyle]="{'width': '70px',
+                        'heigt': '70px',
+                        'border-radius': '50%'}" [ngClass]="{'mobile-img': breakpointObserver.isXSmallOrSmall}"
+            [src]="authService.currentUserSig()?.avatar" referrerPolicy="no-referrer">
+        } @else {
+        <img [ngStyle]="{'width': '70px',
+                        'heigt': '70px',
+                        'border-radius': '50%'}" [ngClass]="{'mobile-img': breakpointObserver.isXSmallOrSmall}"
+            [src]="findUserWithId(currentMessage.senderId)?.avatar" referrerPolicy="no-referrer">
+        }
+        <div class="floatingReactionBox"
+            [ngClass]="{'replyfloatingReactionBox': authService.currentUserSig()?.uid!==currentMessage.senderId }"
+            [ngStyle]="{'left': authService.currentUserSig()?.uid!==currentMessage.senderId ? 'auto' : '45px',
+                        'right': authService.currentUserSig()?.uid!==currentMessage.senderId ? '45px' : 'auto'}">
+            @if (!isThread) {
+            <div class="iconBox">
+                <ngx-emoji class="singleEmoji" [size]="25" emoji="white_check_mark"
+                    (emojiClick)="manageEmoji($event)"></ngx-emoji>
+            </div>
+            <div class="iconBox">
+                <ngx-emoji class="singleEmoji" [size]="25" emoji="raised_hands"
+                    (emojiClick)="manageEmoji($event)"></ngx-emoji>
+            </div>
+            }
+            <div class="iconBox svg-hover" (click)="toggleEmojiPicker()">
+                <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0_76631_17710" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                        width="25" height="24">
+                        <rect x="0.936523" width="24" height="24" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_76631_17710)">
+                        <path
+                            d="M12.9365 22C11.5532 22 10.2532 21.7375 9.03652 21.2125C7.81986 20.6875 6.76152 19.975 5.86152 19.075C4.96152 18.175 4.24902 17.1167 3.72402 15.9C3.19902 14.6833 2.93652 13.3833 2.93652 12C2.93652 10.6167 3.19902 9.31667 3.72402 8.1C4.24902 6.88333 4.96152 5.825 5.86152 4.925C6.76152 4.025 7.81986 3.3125 9.03652 2.7875C10.2532 2.2625 11.5532 2 12.9365 2C13.6865 2 14.4157 2.07917 15.124 2.2375C15.8324 2.39583 16.5032 2.625 17.1365 2.925C17.0699 3.09167 17.0199 3.26667 16.9865 3.45C16.9532 3.63333 16.9365 3.81667 16.9365 4C16.9365 4.23333 16.9615 4.45417 17.0115 4.6625C17.0615 4.87083 17.1282 5.06667 17.2115 5.25C16.5949 4.86667 15.9282 4.5625 15.2115 4.3375C14.4949 4.1125 13.7365 4 12.9365 4C10.7199 4 8.83236 4.77917 7.27402 6.3375C5.71569 7.89583 4.93652 9.78333 4.93652 12C4.93652 14.2167 5.71569 16.1042 7.27402 17.6625C8.83236 19.2208 10.7199 20 12.9365 20C15.1532 20 17.0407 19.2208 18.599 17.6625C20.1574 16.1042 20.9365 14.2167 20.9365 12C20.9365 11.3333 20.8574 10.6917 20.699 10.075C20.5407 9.45833 20.3199 8.875 20.0365 8.325C20.3032 8.54167 20.5949 8.70833 20.9115 8.825C21.2282 8.94167 21.5699 9 21.9365 9C22.0199 9 22.1074 8.99583 22.199 8.9875C22.2907 8.97917 22.3782 8.96667 22.4615 8.95C22.6115 9.43333 22.7282 9.92917 22.8115 10.4375C22.8949 10.9458 22.9365 11.4667 22.9365 12C22.9365 13.3833 22.674 14.6833 22.149 15.9C21.624 17.1167 20.9115 18.175 20.0115 19.075C19.1115 19.975 18.0532 20.6875 16.8365 21.2125C15.6199 21.7375 14.3199 22 12.9365 22ZM16.4365 11C16.8699 11 17.2282 10.8583 17.5115 10.575C17.7949 10.2917 17.9365 9.93333 17.9365 9.5C17.9365 9.06667 17.7949 8.70833 17.5115 8.425C17.2282 8.14167 16.8699 8 16.4365 8C16.0032 8 15.6449 8.14167 15.3615 8.425C15.0782 8.70833 14.9365 9.06667 14.9365 9.5C14.9365 9.93333 15.0782 10.2917 15.3615 10.575C15.6449 10.8583 16.0032 11 16.4365 11ZM9.43652 11C9.86986 11 10.2282 10.8583 10.5115 10.575C10.7949 10.2917 10.9365 9.93333 10.9365 9.5C10.9365 9.06667 10.7949 8.70833 10.5115 8.425C10.2282 8.14167 9.86986 8 9.43652 8C9.00319 8 8.64486 8.14167 8.36152 8.425C8.07819 8.70833 7.93652 9.06667 7.93652 9.5C7.93652 9.93333 8.07819 10.2917 8.36152 10.575C8.64486 10.8583 9.00319 11 9.43652 11ZM12.9365 17.5C14.1199 17.5 15.1657 17.175 16.074 16.525C16.9824 15.875 17.6365 15.0333 18.0365 14H7.83652C8.23652 15.0333 8.89069 15.875 9.79902 16.525C10.7074 17.175 11.7532 17.5 12.9365 17.5ZM20.9365 5H19.9365C19.6532 5 19.4157 4.90417 19.224 4.7125C19.0324 4.52083 18.9365 4.28333 18.9365 4C18.9365 3.71667 19.0324 3.47917 19.224 3.2875C19.4157 3.09583 19.6532 3 19.9365 3H20.9365V2C20.9365 1.71667 21.0324 1.47917 21.224 1.2875C21.4157 1.09583 21.6532 1 21.9365 1C22.2199 1 22.4574 1.09583 22.649 1.2875C22.8407 1.47917 22.9365 1.71667 22.9365 2V3H23.9365C24.2199 3 24.4574 3.09583 24.649 3.2875C24.8407 3.47917 24.9365 3.71667 24.9365 4C24.9365 4.28333 24.8407 4.52083 24.649 4.7125C24.4574 4.90417 24.2199 5 23.9365 5H22.9365V6C22.9365 6.28333 22.8407 6.52083 22.649 6.7125C22.4574 6.90417 22.2199 7 21.9365 7C21.6532 7 21.4157 6.90417 21.224 6.7125C21.0324 6.52083 20.9365 6.28333 20.9365 6V5Z"
+                            fill="black" />
+                    </g>
+                </svg>
+            </div>
+            @if (showEmojiPicker) {
+            <div [ngClass]="authService.currentUserSig()?.uid===currentMessage.senderId ? 'myEmojiPicker': 'replyEmojiPicker'"
+                #emojiPicker>
+                <emoji-mart (emojiSelect)="manageEmoji($event); toggleEmojiPicker() " [showPreview]="false"
+                    [darkMode]="false" color="#444DF2" title="Pick your emoji…" [showSingleCategory]="true">
+                </emoji-mart>
+            </div>
+            }
+            @if (!isThread) {
+            <div class="iconBox svg-hover" (click)="this.uiService.openThread()">
+                <svg [id]="message.msgId" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0_1823_21598" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                        width="24" height="24">
+                        <rect width="24" height="24" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_1823_21598)">
+                        <path
+                            d="M7 14H17C17.2833 14 17.5207 13.904 17.712 13.712C17.904 13.5207 18 13.2833 18 13C18 12.7167 17.904 12.479 17.712 12.287C17.5207 12.0957 17.2833 12 17 12H7C6.71667 12 6.479 12.0957 6.287 12.287C6.09567 12.479 6 12.7167 6 13C6 13.2833 6.09567 13.5207 6.287 13.712C6.479 13.904 6.71667 14 7 14ZM7 11H17C17.2833 11 17.5207 10.904 17.712 10.712C17.904 10.5207 18 10.2833 18 10C18 9.71667 17.904 9.479 17.712 9.287C17.5207 9.09567 17.2833 9 17 9H7C6.71667 9 6.479 9.09567 6.287 9.287C6.09567 9.479 6 9.71667 6 10C6 10.2833 6.09567 10.5207 6.287 10.712C6.479 10.904 6.71667 11 7 11ZM7 8H17C17.2833 8 17.5207 7.90433 17.712 7.713C17.904 7.521 18 7.28333 18 7C18 6.71667 17.904 6.479 17.712 6.287C17.5207 6.09567 17.2833 6 17 6H7C6.71667 6 6.479 6.09567 6.287 6.287C6.09567 6.479 6 6.71667 6 7C6 7.28333 6.09567 7.521 6.287 7.713C6.479 7.90433 6.71667 8 7 8ZM20.3 20.3L18 18H4C3.45 18 2.97933 17.8043 2.588 17.413C2.196 17.021 2 16.55 2 16V4C2 3.45 2.196 2.979 2.588 2.587C2.97933 2.19567 3.45 2 4 2H20C20.55 2 21.021 2.19567 21.413 2.587C21.8043 2.979 22 3.45 22 4V19.575C22 20.025 21.796 20.3373 21.388 20.512C20.9793 20.6873 20.6167 20.6167 20.3 20.3ZM4 4V16H18.825L20 17.175V4H4Z"
+                            fill="black" />
+                    </g>
+                </svg>
+            </div>
+            }
+            @if (authService.currentUserSig()?.uid===currentMessage.senderId) {
+            <div class="iconBox svg-hover" (click)="toggleEditPopup()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0_1823_21565" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                        width="24" height="24">
+                        <rect width="24" height="24" fill="#D9D9D9" />
+                    </mask>
+                    <g mask="url(#mask0_1823_21565)">
+                        <path
+                            d="M12 20C11.45 20 10.9792 19.8042 10.5875 19.4125C10.1958 19.0208 10 18.55 10 18C10 17.45 10.1958 16.9792 10.5875 16.5875C10.9792 16.1958 11.45 16 12 16C12.55 16 13.0208 16.1958 13.4125 16.5875C13.8042 16.9792 14 17.45 14 18C14 18.55 13.8042 19.0208 13.4125 19.4125C13.0208 19.8042 12.55 20 12 20ZM12 14C11.45 14 10.9792 13.8042 10.5875 13.4125C10.1958 13.0208 10 12.55 10 12C10 11.45 10.1958 10.9792 10.5875 10.5875C10.9792 10.1958 11.45 10 12 10C12.55 10 13.0208 10.1958 13.4125 10.5875C13.8042 10.9792 14 11.45 14 12C14 12.55 13.8042 13.0208 13.4125 13.4125C13.0208 13.8042 12.55 14 12 14ZM12 8C11.45 8 10.9792 7.80417 10.5875 7.4125C10.1958 7.02083 10 6.55 10 6C10 5.45 10.1958 4.97917 10.5875 4.5875C10.9792 4.19583 11.45 4 12 4C12.55 4 13.0208 4.19583 13.4125 4.5875C13.8042 4.97917 14 5.45 14 6C14 6.55 13.8042 7.02083 13.4125 7.4125C13.0208 7.80417 12.55 8 12 8Z"
+                            fill="#1C1B1F" />
+                    </g>
+                </svg>
+            </div>
+            }
+            @if (showEditPopup) {
+                <div class="editpopup" #editPopup (click)="showEditArea()"
+                [ngStyle]="{'left': isThread ? '20px' : '220px'}">
+                    <span>Nachricht bearbeiten</span>
+                </div>
+                }
+        </div>
+    </div>
+    }
+</section>

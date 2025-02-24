@@ -1,0 +1,54 @@
+<div class="channel-container">
+    <div (click)="closeEditChannel()" (mouseenter)="isHoveredClose = true" (mouseleave)="isHoveredClose = false"
+        class="close-container">
+        <img [src]="isHoveredClose ? 'img/icons/close-blue.png' : 'img/icons/close.png'" alt="">
+    </div>
+    <div class="channel-header">
+        <img src="img/icons/tag.png" alt="">
+        <h1>{{ channel?.title }}</h1>
+    </div>
+    <div [ngClass]="editName ? 'hide-border': ''"  class="channel-name-container">
+        <div class="edit-name">
+            <h2>Channel-Name</h2>
+            <p [ngClass]="{'disabled-link' : existChannel}" (click)="editName = !editName" (click)="editChannelName()">{{ changeName }}</p>
+        </div>
+        <div [ngClass]="editName ? 'hide-channel-name': 'show-channel-name'"  class="channel-name">
+            <img src="img/icons/tag.png" alt="">
+            <p>{{ channel?.title }}</p>
+        </div>
+        <div [ngClass]="editName ? 'show-channel-name': 'hide-channel-name'" class="name-input-container">
+            <img src="img/icons/tag.png" alt="">
+            <input [(ngModel)]="titleInput" (keyup)="checkChannelName()" value="{{ channel?.title }}" type="text">
+        </div>
+        <div [ngClass]="existChannel ? 'show' : 'hide'" class="check-name ">
+            <p>Dieser Channel existiert bereits.</p>
+        </div>
+    </div>
+
+    <div [ngClass]="editDesc ? 'hide-border': ''"  class="channel-description-container" [ngClass]="{'margin-b-20': breakpointObserver.isXSmallOrSmall}">
+        <div class="edit-name">
+            <h2>Beschreibung</h2>
+            <p (click)="editDesc = !editDesc" (click)="editChannelDesc()">{{ changeDesc }}</p>
+        </div>
+        <div [ngClass]="editDesc ? 'hide-channel-desc': 'show-channel-desc'" class="channel-desc">
+            <p class="description">{{ channel?.description }}</p>
+        </div>
+        <div class="desc-input-container">
+            <input [(ngModel)]="descInput"  [ngClass]="editDesc ? 'show-channel-desc': 'hide-channel-desc'" placeholder="Dein Text hier"  type="text">
+        </div>
+        <div class="line"></div>
+        <div class="created-from">
+            <h2>Erstellt von</h2>
+            <p>{{ channel?.creatorId}}</p>
+        </div>
+    </div>
+
+    <div class="channel-user-container" *ngIf="breakpointObserver.isXSmallOrSmall">
+        <app-show-member-in-channel></app-show-member-in-channel>
+    </div>
+
+    <div class="btn-container">
+        <button (click)="leaveChannel()">Channel verlassen</button>
+    </div>
+
+</div>

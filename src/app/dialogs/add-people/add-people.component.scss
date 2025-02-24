@@ -1,0 +1,326 @@
+.add-people-container {
+  background-color: white;
+  box-shadow: 0px 6px 10px 0px #00000033;
+  border-radius: 30px;
+  padding: 40px;
+  font-family: 'Nunito';
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+
+
+  >h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  >p {
+    font-size: 18px;
+  }
+
+  >img {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+  }
+}
+
+
+.mdc-dialog--open .mat-mdc-dialog-surface {
+  overflow: visible !important;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+
+}
+
+.first-row {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  >p {
+    margin: 0;
+  }
+
+}
+
+.second-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  >p {
+    margin: 0;
+  }
+
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #adb0d9;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+
+  &:checked::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #444DF2;
+
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+
+  >button {
+    background: #444DF2;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+
+
+    &:hover {
+      background: #797EF3;
+      cursor: pointer;
+
+    }
+
+    &:disabled {
+      background: #A0A0A0; 
+      cursor: default;
+    }
+
+  }
+}
+
+.close-container {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    background: #ECEEFE;
+    border-radius: 100%;
+
+  }
+}
+
+.input-container {
+  max-height: 0px;
+  display: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+
+  >input {
+    border-radius: 30px;
+    padding: 15px 20px;
+    border: 1px solid #ADB0D9;
+    width: 100%;
+    font-size: 18px;
+    outline: none;
+
+    &:hover {
+      border: 1px solid #797EF3
+    }
+
+    &:focus {
+      border: 1px solid #535AF1
+    }
+  }
+}
+
+.show {
+  display: flex;
+  max-height: 53px;
+}
+
+.single-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+
+}
+
+.single-user-hover {
+  padding: 2px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &:hover {
+    cursor: pointer;
+    background: #ECEEFE;
+    border-radius: 30px;
+    color: #535AF1;
+
+  }
+
+}
+
+.avatar img {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border-radius: 50%;
+}
+
+.username p {
+  font-size: 18px;
+  margin: 0;
+}
+
+.showUserDialog {
+  display: flex !important;
+  flex-direction: column;
+
+}
+
+.user-dialog {
+  display: none;
+  width: 335px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 12px 12px;
+  border: 1px solid #ADB0D9;
+  background-color: white;
+  box-shadow: 0px 2px 10px 0px #00000014;
+  position: absolute;
+  left: 20px;
+  top: 45px;
+  z-index: 9999; 
+  max-height: 150px;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+
+
+
+.hideUserDialog {
+  display: none;
+}
+
+.input-container1 {
+  display: flex;
+  flex-direction: column;
+  height: 270px;
+  gap: 10px;
+}
+
+.selected-users {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: flex;
+  align-items: center;
+  background-color: #f3f4ff;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 16px;
+  color: #333;
+  gap: 4px;
+  margin-top: 12px;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: #666;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+}
+
+.filtered-users {
+  margin-top: 10px;
+
+  .user-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #e6e6ff;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+  }
+
+}
+
+.user-close {
+  width: 18px;
+  height: 18px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+.user-container {
+  max-height: 85px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+@media (max-width: 500px) {
+  .button-container {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .add-people-container {
+    padding: 20px;
+  }
+
+  .close-container {
+    top: 20px;
+    right: 20px;
+  }
+
+  .user-dialog {
+    width: 250px;
+  }
+}

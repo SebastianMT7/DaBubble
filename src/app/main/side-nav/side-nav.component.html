@@ -1,0 +1,153 @@
+    
+    <section [ngClass]="{
+        'slide-in': uiService.menuVisible, 
+        'no-margin': breakpointObserver.isXSmallOrSmall, 
+        'mobile-height': breakpointObserver.isXSmallOrSmall}" 
+        [ngStyle]="{'display': (breakpointObserver.isMedium && uiService.showThread) ? 'none' : ((breakpointObserver.isXSmallOrSmall && uiService.showSidenav()) || (!breakpointObserver.isXSmallOrSmall && uiService.showSidenav()) ? 'block' : 'none')}">
+        <div class="scroll-container">
+            <div class="workspace-container" [ngClass]="{'d-none': breakpointObserver.isXSmallOrSmall}">
+                <div class="workspace-text">
+                    <img src="img/icons/Workspace-logo.png" alt="">
+                    <p>Devspace</p>
+                </div>
+                <div (click)="openNewMessage()" (mouseenter)="isHoveredEdit = true" (mouseleave)="isHoveredEdit = false" class="edit-square">
+                    <img [src]="isHoveredEdit ? 'img/icons/edit_square-blue.png' : 'img/icons/edit_square.png'" alt="">
+                </div>
+            </div>
+
+            <div class="search-container" [ngClass]="{'d-none': !breakpointObserver.isXSmallOrSmall}">
+                <div class="input-container">
+                    <input (click)="this.searchbarService.combineArraysWithTypes()"
+                        (input)="this.searchbarService.filteredUsers" [(ngModel)]="this.searchbarService.searchName"
+                        type="text" placeholder="Devspace durchsuchen">
+                    <img src="img/icons/search-thin-grey.png" alt="">
+                </div>
+                <div [ngClass]="{'hideUserDialog' : this.searchbarService.searchName.length <= 0}"
+                    class="user-dialog showUserDialog">
+                    <div *ngFor="let obj of searchbarService.filteredUsers" class="single-user">
+                        <div class="single-user-hover no-padding">
+                            @if (obj.name == "user") {
+                            <div (click)="startConversation(obj.data)" class="single-search">
+                                <img class="search-avatar" src="{{ obj.data.avatar}}" alt="">
+                                <p class="searchusername">{{ obj.data.username }}</p>
+                            </div>
+                            }
+                            @if (obj.name == "channel") {
+                            <div (click)="openChannel(obj.data)" class="single-search">
+                                <img src="img/icons/tag.png" alt="">
+                                <p class="searchusername">{{ obj.data.title }}</p>
+                            </div>
+                            }
+                            <div *ngIf="obj.name === 'conversation'" class="w-100">
+                                <div *ngFor="let message of obj.data.messages" class="single-user">
+                                    <div  class="single-user-hover no-padding" (click)="openSearchMsg(obj.data, message)" *ngIf="message.text.toLowerCase().includes(this.searchbarService.searchName.toLowerCase())"
+                                        class="single-search flex-start">
+                                        <img src="img/icons/chats-icon.png" alt="">
+                                        <p class="searchusername">
+                                            {{ message.text }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="obj.name === 'channel-chat'" class="w-100">
+                                <div *ngFor="let message of obj.data.messages" class="single-user">
+                                    <div  class="single-user-hover no-padding" (click)="openSearchMsg(obj.data, message, obj.channelId)" *ngIf="message.text.toLowerCase().includes(this.searchbarService.searchName.toLowerCase())"
+                                        class="single-search flex-start">
+                                        <img src="img/icons/chats-icon.png" alt="">
+                                        <p class="searchusername">
+                                            {{ message.text }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="obj.name === 'thread'" class="w-100">
+                                <div *ngFor="let message of obj.data.messages">
+                                    <div (click)="openThreadMsg(obj.data, message)" *ngIf="message.text.toLowerCase().includes(this.searchbarService.searchName.toLowerCase())"
+                                        class="single-search">
+                                        <img src="img/icons/thread-icon.png" alt="">
+                                        <p class="searchusername">
+                                            {{ message.text }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="channel-row" [ngClass]="{'d-none': breakpointObserver.isXSmallOrSmall && searchbarService.filteredUsers.length > 0}">
+                <div class="channel-container">
+                    <div (click)="toggleChannel()" (mouseenter)="isHoveredChannel = true"
+                        (mouseleave)="isHoveredChannel = false" (mouseenter)="changeImg()" (mouseleave)="resetImg()"
+                        class="channel-header">
+                        <img class="arrow-drop"
+                            [src]="hideChannel ? (isHoveredChannel ? 'img/icons/arrow_drop_down-right-blue.png' : 'img/icons/arrow_drop_down-right.png') : (isHoveredChannel ? 'img/icons/arrow_drop_down-blue.png' : 'img/icons/arrow_drop_down.png')"
+                            alt="">
+                        <img class="workspaces-img" [src]="workspaceImg" alt="">
+                        <p>Channels</p>
+                    </div>
+                    <div (click)="openDialogChannel()" (mouseenter)="isHoveredAdd = true" (mouseleave)="isHoveredAdd = false" class="add-black">
+                        <img [src]="isHoveredAdd ? 'img/icons/add-blue.png' : 'img/icons/add-black.png'" alt="">
+                    </div>
+                </div>
+                <div class="channels" [ngClass]="{'hide' : hideChannel}">
+                        <div  *ngFor="let channel of firebaseService.allChannels " (click)="openChannel(channel)" class="developer">
+                            <div  class="dev-hover">
+                                <img [src]="tagImg" alt="">
+                                <p>{{ channel.title}}</p>
+                            </div>
+                        </div>
+                    
+                   
+                    <div (click)="openDialogChannel()" (mouseenter)="changeImgChannel()" (mouseleave)="resetImgChannel()" class="add-channel">
+                        <img [src]="addImg" alt="">
+                        <p>Channel hinzufügen</p>
+                    </div>
+                </div>
+        
+                <div (mouseenter)="isHoveredUser = true" (mouseleave)="isHoveredUser = false" (click)="toggleUser()"
+                    (mouseenter)="changeImgMessage()" (mouseleave)="resetImgMessage()" class="channel-header">
+                    <img [src]="hideUser ? (isHoveredUser ? 'img/icons/arrow_drop_down-right-blue.png' : 'img/icons/arrow_drop_down-right.png'): (isHoveredUser ? 'img/icons/arrow_drop_down-blue.png' : 'img/icons/arrow_drop_down.png')"
+                        alt="">
+                    <img [src]="accountImg" alt="">
+                    <p>Direktnachrichten</p>
+                </div>
+        
+                <div [ngClass]="{'hide': hideUser}" class="users">
+                    
+                    <div *ngFor="let user of firebaseService.allUsers"
+                        class="single-user">
+                        <div (click)="startConversation(user)"  class="single-user-hover">
+                            <div class="avatar-side-nav">
+                                <img class="avatar-img" [src]="user.avatar" referrerPolicy="no-referrer" alt="">
+                                <img class="status" [src]="user.status == 'online' ? 'img/icons/Online.png' : 'img/icons/Offline.png'" alt="">
+                            </div>
+                            <div class="username">
+                                <p>{{ user.username }}</p>
+                                @if (user.uid == userDataService.currentUserSig()?.uid) {
+                                    <p> (Du)</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="new-msg-btn" (click)="openNewMessage()" [ngClass]="{'d-none': !breakpointObserver.isXSmallOrSmall}">
+        <div class="postion-box">
+            <img src="img/icons/new-msg-small-white.png" alt="">
+        </div>
+    </div>
+
+<div (mouseenter)="isHoveredMenu = true" (mouseleave)="isHoveredMenu = false" (mouseenter)="changeImgMenu()"
+    (mouseleave)="resetImgMenu()" (click)="toggleMenu()" class="workspace-show-hide" [ngClass]="{'d-none': breakpointObserver.isXSmallOrSmall}">
+    <p>{{ menuVisible ? "Workspace-Menü öffnen": "Workspace-Menü schließen" }}</p>
+    <img [src]="menuVisible ? (isHoveredMenu ? 'img/icons/open-navigation-blue.png' : 'img/icons/open-navigation.png'): (isHoveredMenu ? 'img/icons/hide-navigation-blue.png' : 'img/icons/Hide-navigation.png')"
+        alt="">
+
+</div>

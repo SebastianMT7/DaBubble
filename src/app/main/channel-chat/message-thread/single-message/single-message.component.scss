@@ -1,0 +1,355 @@
+@import './../../../../../styles.scss';
+
+section {
+    position: relative;
+}
+
+.divider {
+    @include dFlex();
+    padding: 20px 35px;
+
+    .date {
+        border: solid 1px #ADB0D9;
+        border-radius: 30px;
+        padding: 5px 15px;
+        font-size: 18px;
+    }
+
+    .lineDiv {
+        @include dFlex();
+        flex-grow: 2;
+
+        hr {
+            border: unset;
+            height: 1px;
+            width: 100%;
+            background-color: #ADB0D9;
+        }
+    }
+}
+
+.myMessageBox {
+    @include dFlex($ai: flex-start, $jc: flex-end, $gap: 30px);
+    padding: 20px 45px;
+    position: relative;
+
+    &:hover {
+        background-color: $bgHover;
+
+        .floatingReactionBox {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 75ms ease-in-out;
+        }
+    }
+}
+
+.replyMessageBox {
+    @include dFlex($fd: row-reverse, $jc: flex-end, $gap: 30px);
+    padding: 20px 45px;
+    position: relative;
+
+    &:hover {
+        background-color: $bgHover;
+
+        .replyMessageText {
+            border: white;
+            background-color: white;
+        }
+
+        .replyfloatingReactionBox {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+}
+
+.replyfloatingReactionBox {
+    transform: translateX(150%);
+}
+
+.floatingReactionBox {
+    @include dFlex($gap: 5px);
+    opacity: 0;
+    border: 1px solid #ADB0D9;
+    background-color: white;
+    border-radius: 20px 20px 0 20px;
+    padding: 3px 15px;
+    position: absolute;
+    top: -20px;
+    left: 45px;
+    right: 0;
+    transform: translateX(-100%);
+    transition: all 75ms ease-in-out;
+
+    .svg-hover {
+        &:hover {
+            path {
+                fill: #535AF1;
+            }
+        }
+    }
+}
+
+.iconBox {
+    @include dFlex();
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+
+    .singleEmoji {
+        @include dFlex();
+    }
+
+    &:hover {
+        background-color: $bgHover;
+        scale: 1.07;
+    }
+}
+
+.editpopup {
+    @include dFlex($gap: 15px);
+    position: absolute;
+    top: 50px;
+    background-color: white;
+    box-shadow: 0 6px 14px #0003;
+    border-radius: 0 30px 30px 30px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 600;
+    text-wrap: nowrap;
+    cursor: pointer;
+
+    span {
+        padding: 10px 15px;
+        border-radius: 30px;
+    }
+
+    &:hover {
+        span {
+            background-color: #eceefe;
+            color: #535af1;
+            font-weight: 700;
+            scale: 1.07;
+        }
+    }
+}
+
+.myEmojiPicker {
+    position: absolute;
+    left: 0;
+    right: auto;
+    top: 50px;
+}
+
+.replyEmojiPicker {
+    position: absolute;
+    left: auto;
+    right: 0;
+    top: 50px;
+}
+
+.messageDetails {
+    @include dFlex($ai: flex-end, $fd: column, $gap: 8px);
+
+    .messageInfo {
+        @include dFlex($gap: 20px);
+
+        :nth-child(1) {
+            color: #686868;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        :nth-child(2) {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+    }
+}
+
+.reply-details {
+    align-items: flex-start !important;
+}
+
+.edit-messageDetails {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.replyMessageDetails {
+    align-items: flex-start;
+
+    .messageInfo {
+        @include dFlex($fd: row-reverse, $gap: 20px);
+    }
+}
+
+.flex-reverse {
+    @include dFlex($fd: row-reverse !important, $gap: 20px);
+}
+
+.messageText {
+    border: 1px solid #797EF3;
+    border-radius: 30px 0 30px 30px;
+    background-color: #797EF3;
+    color: white;
+    font-size: 18px;
+    padding: 15px;
+    word-break: break-all;
+}
+
+.replyMessageText {
+    border: $bgHover;
+    border-radius: 0 30px 30px 30px;
+    background-color: $bgHover;
+    color: black;
+}
+
+.editDiv {
+    border: 1px solid #797EF3;
+    color: white;
+    border-radius: 30px 0 30px 30px;
+    background-color: white;
+    font-size: 18px;
+    padding: 15px;
+    word-break: break-all;
+    box-sizing: border-box;
+    width: 100%;
+
+    textarea {
+        width: 100%;
+        resize: none;
+        outline: none;
+        font-size: 18px;
+        border: none;
+        color: #686868;
+        text-wrap: wrap;
+        word-break: break-word;
+    }
+
+    .editBtnDiv {
+        @include dFlex($gap: 8px, $jc: flex-end);
+        padding-top: 20px;
+    }
+}
+
+.btn-editMsg {
+    font-size: 14px;
+    padding: 6px 12px;
+}
+
+.bottomBox {
+    @include dFlex($fd: column, $ai: flex-ends, $gap: 8px);
+
+    .answerBox {
+        @include dFlex($gap: 20px);
+
+        .answer {
+            font-size: 18px;
+            color: #535AF1;
+            cursor: pointer;
+
+            &:hover {
+                font-size: 18px;
+                font-weight: 700;
+                color: #444DF2;
+            }
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            color: #686868;
+        }
+    }
+}
+
+.reactionBox {
+    @include dFlex($jc: flex-end, $gap: 10px);
+
+    .emojiBox {
+        @include dFlex($gap: 10px);
+        border: 1px solid #ADB0D9;
+        border-radius: 20px;
+        padding: 5px 10px;
+        background-color: white;
+        position: relative;
+
+        ngx-emoji {
+            @include dFlex();
+        }
+
+        p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        &:hover {
+            cursor: pointer;
+            border-color: #444DF2;
+
+            .whoReactInfo {
+                display: flex;
+            }
+        }
+    }
+}
+
+.replayReactionBox {
+    justify-content: flex-start;
+}
+
+.whoReactInfo {
+    @include dFlex($fd: column, $gap: 5px);
+    display: none;
+    background-color: #444DF2;
+    color: white;
+    padding: 15px 10px;
+    border-radius: 30px 30px 0 30px;
+    position: absolute;
+    bottom: 40px;
+    left: auto;
+    right: 32px;
+    min-width: 140px;
+
+    .reacteduser {
+        span {
+            font-size: 18px;
+            font-weight: 700;
+        }
+    }
+
+    .plural {
+        font-size: 16px;
+    }
+}
+
+.whoReactInfoReply {
+    right: auto;
+    left: 32px;
+    border-radius: 30px 30px 30px 0;
+}
+
+.mobile-img {
+    height: 50px !important;
+    width: 50px !important;
+}
+
+.mobile-font {
+    font-size: 18px !important;
+    min-width: max-content;
+}
+
+.answerBox {
+    span {
+        min-width: max-content;
+    }
+
+    p {
+        min-width: max-content;
+    }
+}

@@ -1,0 +1,39 @@
+@import '../../../styles.scss';
+
+
+.header{
+    @include dFlex(space-between, center);
+    padding-inline: 32px;
+    padding-block: 32px;
+
+    @media(max-width: 600px) {
+        @include dFlex(center !important);
+    }
+
+    .logo-box{
+        @include dFlex();
+        gap: 16px;
+        font-size: 24px;
+        font-weight: 700;
+        cursor: pointer;
+
+        img{
+            height: 70px;
+            width: 70px;
+            object-fit: cover;
+        }
+    }
+
+    .new-member-box{
+        @include dFlex(center, center, column);
+        padding: 16px;
+
+        @media(max-width: 600px) {
+            display: none !important;
+        }
+    }
+}
+
+.align-start{
+    @include dFlex(flex-start, center);
+}

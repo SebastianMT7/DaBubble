@@ -1,0 +1,9 @@
+<div class="animation-container" *ngIf="containerVisible">
+    <div class="logo">
+      <img 
+        src="img/logo.png" 
+        (load)="onImageLoad()" 
+        [ngClass]="{ 'animate': imageLoaded }" />
+      <div class="title" [ngClass]="{ 'animate': imageLoaded }">DABubble</div>
+    </div>
+  </div>

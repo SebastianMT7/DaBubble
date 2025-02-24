@@ -1,0 +1,64 @@
+@import "./../../../styles.scss";
+
+* {
+  font-size: 18px;
+  font-weight: 400;
+  font-family: "Nunito";
+}
+.container {
+  margin: 45px 40px;
+  box-sizing: border-box;
+}
+
+.container-mobile{
+  margin: 25px 20px !important;
+}
+
+.header {
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $gap: 0);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.content {
+  margin-left: 8px;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.overflow-scroll{
+  height: 60svh;
+  overflow-y: auto;
+}
+
+app-single-member {
+  margin-bottom: 8px;
+}
+
+.add-member {
+    @include dFlex($jc: unset, $ai: center, $fd: row, $gap: 0);
+    padding: 4px 20px;
+  &:hover {
+    background-color: $bgHover;
+     color:#535AF1 ;
+     border-radius: 30px;
+  }
+}
+
+.add-member-icon {
+  @include dFlex();
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+      background-color: $bgHover;
+      border-radius: 50%;
+  }
+}

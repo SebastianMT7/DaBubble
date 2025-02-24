@@ -1,0 +1,134 @@
+@import "./../../../styles.scss";
+
+* {
+  font-family: "Nunito";
+}
+ 
+.profil-dialog{
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.profile-username {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 20px 40px;
+}
+
+.profile-header {
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $gap: 0);
+  margin: 20px 40px;
+}
+
+.avatar {
+  border-radius: 200px;
+}
+
+.prifile-img{
+  width: 200px;
+  margin: 0px 40px;
+}
+
+.profil-name {
+  margin: 20px 40px;
+  @include dFlex($jc: space-between, $ai: unset, $fd: row, $gap: 0);
+}
+
+.online-status {
+  display: flex;
+  margin: 20px 40px;
+  gap: 15px;
+  align-items: center;
+  >img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.active-online-status {
+  color: #92c83e;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.absent-online-status {
+  color: #686868;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.close-profil {
+  @include dFlex();
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+      background-color: $bgHover;
+      border-radius: 50%;
+  }
+}
+
+.email {
+  margin: 20px 40px;
+  @include dFlex($jc: unset, $ai: flex-start, $fd: row, $gap: 20px);
+  div {
+    @include dFlex($jc: none, $ai: none, $fd: column, $gap: 0);
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.my-email-adress {
+  color: #1381ff;
+}
+
+button {
+  margin: 0 0 20px 40px;
+}
+
+@media (max-width: 500px) {
+
+  .profile-header{
+    width: 100%;
+  }
+     
+  .profil-dialog{
+    @include dFlex($jc:unset, $ai: center, $fd: column, $gap: 0px);
+    max-width: 800px;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: 100vw;
+  }
+
+  .avatar{
+    margin: 0;
+  }
+
+  .online-status{
+    margin: 0px 40px 20px 40px;
+  }
+
+  .email{
+    margin: 0px 40px 20px 40px;
+}
+
+button {
+  margin: 0px;
+}
+}
+
+

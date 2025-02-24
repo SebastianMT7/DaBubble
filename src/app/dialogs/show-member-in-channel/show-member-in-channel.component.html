@@ -1,0 +1,18 @@
+<div class="container" [ngClass]="{'container-mobile': breakpointObserver.isXSmallOrSmall}">
+    <div class="header">
+        <h2>Mitglieder</h2>
+        <div mat-dialog-close class="close" *ngIf="breakpointObserver.isXSmallOrSmall">
+        </div>
+    </div>
+    <div class="content" [ngClass]="{'overflow-scroll': !breakpointObserver.isXSmallOrSmall}">
+        @for (user of allUsersFromAChannelId; track $index) {
+        <app-single-member [member]="this.user"></app-single-member>
+        }
+        <div class="add-member" >
+            <div class="add-member-icon" (mouseenter)="isHoveredAddMember = true" (mouseleave)="isHoveredAddMember = false">
+                <img [src]="isHoveredAddMember ? 'img/icons/user-add-blue.png' : 'img/icons/user-add.png'" alt="addUser">
+            </div>
+            <span mat-dialog-close (click)="uiService.addToChoosenChannelDialog()">Mitglieder hinzufügen</span>
+        </div>
+    </div>
+</div>

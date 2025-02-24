@@ -1,0 +1,100 @@
+@import './../../../styles.scss';
+
+.main {
+    position: relative;
+    background-color: white;
+    border-radius: 30px;
+    font-family: 'Nunito';
+    height: calc(100svh - 137px);
+    width: 100vw;
+    max-width: 485px;
+}
+
+header {
+    @include dFlex($jc: space-between);
+    color: black;
+    padding: 35px 40px;
+    box-shadow: 0 .125rem .625rem #00000014;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.padding-small{
+    padding: 16px !important;
+}
+
+.no-maxWidth{
+    max-width: unset !important;
+}
+
+.channelThread{
+    @include dFlex($gap: 5px);
+
+    p{
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    span{
+        font-size: 14px;
+        color: #797EF3;
+    }
+}
+
+.closeThread {
+    @include dFlex();
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        background-color: $bgHover;
+        border-radius: 50%;
+    }
+}
+
+app-send-message{    
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    left: 20px;
+}
+
+.mobile-height{
+    height: calc(100svh - 85px) !important;
+  }
+
+.chat{
+    position: relative;   
+    height: calc(100% - 300px); 
+}
+
+.thread{
+    height: calc(100% - 50px);; 
+    padding-top: 40px;
+    overflow-y: auto;
+
+    .divider{
+        width: 100%;
+        @include dFlex($gap: 20px);
+        padding: 0 35px;
+        box-sizing: border-box;
+
+        p{
+            font-size: 18px;
+            font-weight: 400;
+            color: #ADB0D9;
+            min-width: max-content;
+        }
+
+        .line{
+            height: 1px;
+            width: 100%;
+            background-color: #ADB0D9;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<section class="overlay">
+    <app-header-sign></app-header-sign>
+
+    <div class="card">
+        <img routerLink="/register" class="arrow-back" src="img/icons/login/arrow_back.svg">
+
+        <h1>Wähle deinen Avatar</h1>
+
+        @if(!chosenAvatar) {
+            <img class="big-img" src="img/avatars/avatar_default.png" alt="">
+        }@else {
+            <img class="big-img" src="{{chosenAvatar}}" alt="">
+        }
+        <span class="username">{{currentData.username}}</span>
+        <div class="width-100">
+            <p class="ta-start">Aus der Liste wählen:</p>
+        </div>        
+        <div class="avatar-box">
+            @for (avatar of avatarIcons; track $index) {
+                <img (click)="setAvatar(avatar)" class="avatar-img" [src]="avatar" alt="">
+            }
+        </div>
+
+        <!-- <div class="upload-box">
+            <p>oder ein eigenes Bild verwenden</p>
+            <a class="link-btn" (click)="triggerFileInput()">Datei hochladen</a>
+            <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
+            <p *ngIf="downloadURL">Datei-URL: <a [href]="downloadURL" target="_blank">{{ downloadURL }}</a></p>
+        </div> -->
+
+        <div class="btn-box width-100">
+            <button class="btn-blue" [disabled]="!chosenAvatar" [class.btn-inactive]="!chosenAvatar" (click)="submitRegistration()">Weiter</button>
+        </div>
+    </div>
+</section>

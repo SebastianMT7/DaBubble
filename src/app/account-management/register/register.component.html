@@ -1,0 +1,88 @@
+<section class="overlay">
+    <app-header-sign></app-header-sign>
+
+    <div class="card">
+        <img routerLink="/" class="arrow-back" src="img/icons/login/arrow_back.svg">
+
+        <h1>Konto erstellen</h1>
+
+        @if (authService.errorMessage) {
+        <p class="errMsg">{{ authService.errorMessage }}</p>
+        }
+        <p>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
+
+        <form [formGroup]="userForm">
+            <div class="input-control">
+                <div class="inputfield-container">
+                    <img src="img/icons/login/user_icon.svg">
+                    <input id="name" type="text" formControlName="username" name="username" required
+                        placeholder="Nutzername">
+                </div>
+                <div class="hint">
+                    @if (userForm.controls.username.invalid && (userForm.controls.username.touched ||
+                    userForm.controls.username.dirty)) {
+                    @if (userForm.controls.username.errors?.['required']) {
+                    <small>*Wähle einen Nutzernamen!</small>
+                    }
+                    @if (userForm.controls.username.errors?.['minlength']) {
+                    <small>*Der Name muss mindestens 4 Zeichen beinhalten!</small>
+                    }
+                    }
+                </div>
+            </div>
+
+            <div class="input-control">
+                <div class="inputfield-container">
+                    <img src="img/icons/login/mail_icon.svg">
+                    <input id="email" type="email" formControlName="email" name="email" required
+                        placeholder="beispielname@email.com">
+                </div>
+                <div class="hint">
+                    @if (userForm.controls.email.invalid && (userForm.controls.email.touched ||
+                    userForm.controls.email.dirty)) {
+                    @if (userForm.controls.email.errors?.['required']) {
+                    <small>*Eine Email ist erforderlich!</small>
+                    }
+                    @if (userForm.controls.email.errors?.['pattern']) {
+                    <small>*Ungültige Email</small>
+                    }
+                    }
+                </div>
+            </div>
+
+            <div class="input-control">
+                <div class="inputfield-container">
+                    <img src="img/icons/login/password_icon.svg">
+                    <input id="password" type="password" formControlName="password" name="password"
+                        placeholder="Passwort">
+                </div>
+                <div class="hint">
+                    @if (userForm.controls.password.invalid && (userForm.controls.password.touched ||
+                    userForm.controls.password.dirty)) {
+                    @if (userForm.controls.password.errors?.['required']) {
+                    <small>*Bitte gebe dein Passwort ein!</small>
+                    }
+                    @if (userForm.controls.password.errors?.['minlength']) {
+                    <small>*Passwort muss aus min. 6 Zeichen bestehen</small>
+                    }
+                    }
+                </div>
+            </div>
+
+            <div class="confirm-box">
+                <mat-checkbox class="example-margin" formControlName="checkbox">
+                    Ich stimme der <a routerLink="/privacy-policy">Datenschutzerklärung</a> zu.
+                </mat-checkbox>
+            </div>
+        </form>
+
+        <div class="btn-box width-100">
+            <button class="btn-blue" 
+            [disabled]="!userForm.valid || !userForm.controls.checkbox.value" 
+            [class.btn-inactive]="!userForm.valid || !userForm.controls.checkbox.value"
+                (click)="onSubmit()">Weiter</button>
+        </div>
+    </div>
+    <app-impress></app-impress>
+
+</section>

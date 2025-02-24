@@ -1,0 +1,194 @@
+.animation-container {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(45deg, #535af1, #3FA9F5);
+    z-index: 210;
+    overflow: hidden;
+    animation: fadeOutContainer 1s ease-in-out forwards;
+    animation-delay: 2.8s;
+    font-family: 'Nunito';
+
+    .logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-weight: 700;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+
+        @media(max-width: 600px) {
+            font-size: 24px;
+            animation: fadeOutLogo-mobile 1s ease-in-out forwards;
+            animation-delay: 2s;
+        }
+
+        @media(min-width: 600px) {
+            font-size: 64px;
+            animation: moveAndShrinkContainer 1.5s ease-in-out forwards;
+            animation-delay: 2s;
+        }
+
+        img {
+            transform: translateX(162px);
+
+            @media(max-width: 600px) {
+                width: 80px;
+                animation: fadeInImage-mobile 0.5s ease-in-out forwards, shrinkImg-mobile 1s ease-in-out forwards;
+                animation-delay: 0.5s, 2.0s;
+
+            }
+
+            @media(min-width: 600px) {
+                width: 180px;
+                animation: fadeInImage-desktop 0.5s ease-in-out forwards;
+                animation-delay: 0.5s;
+            }
+        }
+
+        .title {
+            opacity: 0;
+            animation: fadeInTitle 0.5s ease-in-out forwards;
+            animation-delay: 1s;
+        }
+    }
+
+    .animate {
+        animation: fadeInImage-desktop 0.5s ease-in-out forwards;
+        // shrinkImg-desktop 1s ease-in-out forwards;
+    }
+
+    @keyframes moveAndShrinkContainer {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 64px;
+            /* Ursprungsposition */
+        }
+
+        100% {
+            transform: translate(0, 0) scale(0.5);
+            top: 32px;
+            left: 32px;
+            font-weight: 700;
+            gap: 16px;
+            /* Endposition (oben links und geschrumpft) */
+        }
+    }
+
+    @keyframes fadeInImage-desktop {
+        from {
+            -webkit-transform: translateX(162px);
+            transform: translateX(162px);
+        }
+
+        to {
+            -webkit-transform: translateX(0);
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInImage-mobile {
+        from {
+            transform: translateX(162px);
+        }
+
+        to {
+            transform: translateX(0px);
+        }
+    }
+
+    @keyframes fadeInTitle {
+        from {
+            opacity: 0;
+            transform: translateY(100vh);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeOutLogo-desktop {
+        from {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 64px;
+        }
+
+        to {
+            top: 32px;
+            left: 32px;
+            transform: translate(0, 0);
+            font-size: 24px;
+            font-weight: 700;
+            gap: 16px;
+        }
+    }
+
+    @keyframes fadeOutLogo-mobile {
+        from {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+        }
+
+        to {
+            top: 65px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: 700;
+            gap: 16px;
+        }
+    }
+
+    @keyframes shrinkImg-desktop {
+        from {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+
+        to {
+            -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+        }
+    }
+
+    @keyframes shrinkImg-mobile {
+        from {
+            height: 80px;
+            width: 80px;
+            object-fit: cover;
+            ;
+        }
+
+        to {
+            height: 70px;
+            width: 70px;
+            object-fit: cover;
+            ;
+        }
+    }
+
+    @keyframes fadeOutContainer {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+<div class="header">
+    <div class="logo-box" routerLink="/">
+        <img src="img/logo.png" alt="">
+        <span>DABubble</span>
+    </div>
+
+    <div class="new-member-box" *ngIf="router.url === '/'">
+        <span>Neu bei DABubble?</span>
+        <a class="link-btn" routerLink="/register">Konto erstellen</a>
+    </div>
+</div>

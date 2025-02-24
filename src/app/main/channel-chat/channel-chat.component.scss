@@ -1,0 +1,337 @@
+@import './../../../styles.scss';
+
+.main {
+    position: relative;
+    background-color: white;
+    height: calc(100svh - 137px);
+    border-radius: 30px;
+    font-family: 'Nunito';
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mobile-height {
+    height: calc(100svh - 85px) !important;
+}
+
+header {
+    @include dFlex($jc: space-between);
+    color: black;
+    padding: 25px 45px;
+    box-shadow: 0 .125rem .625rem #00000014;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    z-index: 50;
+}
+
+.padding-small {
+    padding: 16px !important;
+}
+
+.hoverEffect {
+    &:hover {
+        color: $contHover;
+
+        svg {
+            path {
+                fill: $contHover;
+            }
+        }
+    }
+}
+
+.channelName {
+    @include dFlex($gap: 10px);
+    height: 45px;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 6px 10px;
+    cursor: pointer;
+
+    p {
+        margin: 0;
+    }
+
+    &:hover {
+        background-color: $bgHover;
+        border-radius: 100px;
+    }
+}
+
+
+.avatar {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .avatar-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .status {
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+.users {
+    @include dFlex($jc: flex-start, $gap: 10px);
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.involvedUsers {
+    @include dFlex($fd: row, $jc: flex-start);
+    cursor: pointer;
+    padding: 3px 10px 3px 30px;
+    border-radius: 30px;
+
+    img {
+        width: 40px;
+        border-radius: 50%;
+        background-color: white;
+        margin-left: -20px;
+    }
+
+    p {
+        margin: 0 0 0 10px;
+    }
+
+    &:hover {
+        background-color: $bgHover;
+        color: $contHover;
+    }
+}
+
+.newMsg {
+    @include dFlex($fd: column, $ai: flex-start, $gap: 15px);
+    width: 100%;
+
+    span {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    div {
+        width: 100%;
+
+        .input-container {
+            padding: 15px 20px;
+            box-sizing: border-box;
+            width: 100%;
+            border: 1px solid #ADB0D9;
+            border-radius: 30px;
+            @include dFlex($jc: space-between);
+            gap: 8px;
+
+
+
+            &:hover {
+                border-color: #797EF3;
+            }
+
+            &:focus {
+                border-color: #444DF2;
+            }
+        }
+    }
+
+    input {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: fit-content;
+        outline: none;
+        font-size: 18px;
+        font-weight: 400;
+        color: #686868;
+        border: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.confirm-box {
+    background-color: #92C83E;
+    padding: 20px;
+    margin: 20px 40px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    @include dFlex($gap: 10px);
+    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    z-index: 49;
+    transform: translateY(-100px);
+    animation: slideIn 0.5s ease-out forwards, slideOut 0.5s ease-in-out 4s forwards; 
+
+    mat-icon{
+        scale: 1.2;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
+
+.selectedConv-container {
+    @include dFlex($gap: 8px, $jc: flex-start);
+    flex-wrap: wrap;
+    padding: 25px 45px;
+    box-sizing: border-box;
+    max-height: 300px;
+    overflow-y: auto;
+
+    .selcted-user {
+        padding: 8px;
+        width: max-content;
+        background-color: #ADB0D9;
+        border-radius: 24px;
+        color: white;
+        font-size: 16px;
+        @include dFlex($gap: 8px);
+    }
+}
+
+.addToChannel {
+    cursor: pointer;
+    height: 40px;
+
+    &:hover {
+        svg {
+            path {
+                fill: $contHover;
+                scale: 1.05;
+                transition: ease-in 0.15s;
+            }
+        }
+    }
+}
+
+app-send-message {
+    position: absolute;
+    bottom: 40px;
+    right: 35px;
+    left: 35px;
+}
+
+.showUserDialog {
+    display: flex;
+    flex-direction: column;
+}
+
+.hideUserDialog {
+    display: none !important;
+}
+
+.user-dialog {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 20px 21px;
+    border: 1px solid #ADB0D9;
+    background-color: white;
+    box-shadow: 0px 2px 10px 0px #00000014;
+    box-sizing: border-box;
+    position: absolute;
+    top: 45px;
+    left: 20px;
+    z-index: 51;
+    box-sizing: border-box;
+    width: calc(100% - 20px);
+    gap: 10px;
+    max-width: 450px;
+}
+
+.user-dialog-mobile{
+    left: 0px !important;
+    border-top-left-radius: 20px;
+}
+
+.single-user {
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.scroll-box {
+    position: relative;
+}
+
+.scroll-container {
+    max-height: 230px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.username {
+    font-size: 18px;
+    margin: 0;
+}
+
+.avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.avatar-img-selected {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.username-selected {
+    font-size: 12px;
+    margin: 0;
+}
+
+.single-search {
+    padding: 4px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:hover {
+        cursor: pointer;
+        background: #ECEEFE;
+        border-radius: 30px;
+        color: #535AF1;
+
+    }
+}
+
+.close-img {
+    cursor: pointer;
+    scale: 0.8;
+}

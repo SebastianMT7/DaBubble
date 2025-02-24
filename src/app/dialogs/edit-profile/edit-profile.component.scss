@@ -1,0 +1,155 @@
+@import "./../../../styles.scss";
+
+.header {
+  @include dFlex($jc: space-between, $ai: center, $fd: row, $gap: 0);
+}
+
+* {
+  font-family: "Nunito";
+}
+
+.edit-profil-dialog {
+  overflow-y: auto;
+  height: 80vh;
+  padding: 30px;
+}
+
+.avatar {
+  width: 100%;
+  @include dFlex($jc: center, $ai: center, $fd: row, $gap: 0);
+}
+.avatar-image {
+  width: 200px;
+  border-radius: 200px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  &:hover{
+    opacity: 0.8;
+  }
+}
+
+.avatar-box {
+  @include dFlex(flex-start);
+  flex-wrap: wrap;
+  gap: 8px;
+  .avatar-img {
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    scale: 0.9;
+    &:hover {
+      scale: 1;
+    }
+  }
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.form-group {
+  margin: 45px 20px;
+  @include dFlex($jc: unset, $ai: unset, $fd: column, $gap: 8px);
+}
+
+.profil-name,
+.email {
+  div {
+    @include dFlex($jc: unset, $ai: center, $fd: row, $gap: 10px);
+  }
+}
+
+.inputfield-container {
+  height: 50px;
+  border: #adb0d9 1px solid;
+  border-radius: 30px;
+  background-color: white;
+  input {
+    width: 100%;
+    height: 100%;
+    padding: 0px 10px;
+    border: none !important;
+    border-radius: 30px;
+    outline-color: $contHover;
+  }
+}
+
+.hint {
+  margin-left: 32px;
+  height: 16px;
+  color: red;
+}
+
+.closeDialog {
+  @include dFlex();
+  height: 40px;
+  width: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    background-color: $bgHover;
+    border-radius: 50%;
+  }
+}
+
+.buttons {
+  margin: 45px 20px;
+  @include dFlex($jc: center, $ai: unset, $fd: row, $gap: 32px);
+}
+
+.d-none {
+  display: none;
+}
+
+.position-edit-icon {
+  position: absolute;
+  right: 0px;
+  top: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .edit-profil-dialog {
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .header {
+    @include dFlex($jc: space-between, $ai: center, $fd: row, $gap: 0);
+  }
+
+  .buttons {
+    @include dFlex($jc: center, $ai: unset, $fd: row, $gap: 16px);
+    button {
+      padding: 10px 12px;
+    }
+  }
+
+  .cdk-overlay-pane.mat-mdc-dialog-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+
+  .mat-mdc-dialog-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+
+  .mat-mdc-dialog-surface {
+    border-radius: 0 !important;
+  }
+}

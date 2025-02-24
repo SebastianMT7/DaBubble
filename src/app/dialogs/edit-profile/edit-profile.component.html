@@ -1,0 +1,70 @@
+<div class="edit-profil-dialog">
+
+    <div class="header">
+        <h2>Dieses Profil bearbeiten</h2>
+        <div class="closeDialog" (mouseenter)="isHoveredClose = true" (mouseleave)="isHoveredClose = false">
+            <img (click)="closeProfil()" [src]="isHoveredClose ? 'img/icons/close-blue.png' : 'img/icons/close.png'"
+                alt="">
+        </div>
+
+    </div>
+    <div class="avatar" [ngClass]="{'d-none': isEditingAvatar}">
+        <div [ngStyle]="{ 'position': 'relative'}">
+            <img class="position-edit-icon" (click)="showAvatar()" src="img/icons/edit.png" alt="">
+            <img class="avatar-image" src="{{this.currentAvatar}}" (click)="showAvatar()" alt="">
+        </div>
+    </div>
+    <div> <!--form-->
+        <div class="form-group" [ngClass]="{'d-none': isEditingAvatar}">
+
+            <div class="profil-name" *ngIf="!showPasswordInput">
+                <div class="input">
+                    <img src="img/icons/account_circle.png" alt="">
+                    <label for="name">Vollständiger Name</label>
+                </div>
+                <div class="inputfield-container">
+                    <input (keyup)="checkUsername()" [(ngModel)]="inputName" id="name" type="text">
+                </div>
+            </div>
+
+            <!-- <div class="email" *ngIf="!showPasswordInput">
+                <div>
+                    <img src="img/icons/mail_icon.svg" alt="">
+                    <label for="email">E-mail-Adresse</label>
+                </div>
+                <div class="inputfield-container">
+                    <input [(ngModel)]="inputEmail" id="email" type="text">
+                </div>
+            </div> -->
+
+            <div class="email" *ngIf="showPasswordInput">
+                <div>
+                    <img src="img/icons/login/password_icon.svg" alt="">
+                    <label for="email">Passwort</label>
+                </div>
+                <div class="inputfield-container">
+                    <input [(ngModel)]="inputPassword" id="password" type="password">
+                </div>
+                @if (passwordWrong()) {
+                <small class="hint">Das eingegebene Passwort ist falsch!</small>
+                }
+            </div>
+        </div>
+
+        <div class="buttons" [ngClass]="{'d-none': isEditingAvatar}">
+            <button mat-dialog-close class="btn-white">Abrechen</button>
+            <button (click)="verifyPassword()" [disabled]="!validUsername" class="btn-blue"
+                *ngIf="!showPasswordInput">Speichern</button>
+            <button (click)="changeProfil()" class="btn-blue" *ngIf="showPasswordInput">Bestätigen</button>
+        </div>
+    </div>
+
+    <div [ngClass]="{'d-none': !isEditingAvatar}">
+        <p>Wähle einen Avatar aus dieser Liste:</p>
+        <div class="avatar-box">
+            @for (avatar of avatarIcons; track $index) {
+            <img (click)="selectAvatar(avatar)" class="avatar-img" [src]="avatar" alt="">
+            }
+        </div>
+    </div>
+</div>

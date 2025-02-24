@@ -1,0 +1,94 @@
+@import './../../../styles.scss';
+
+*{
+padding: 0;
+margin:0;
+font-family: 'Nunito';
+font-size: 18px;
+}
+
+.my-profil-dialog{
+    @include dFlex($jc:center, $ai: center, $fd: column, $gap: 20px);
+    max-width: 800px;
+    width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+h2{
+    font-size: 24px;
+    font-weight: 700;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+}
+
+.username{
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.header{
+    @include dFlex($jc:space-between, $ai: center, $fd: row, $gap: 20px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+}
+
+.profil-name{
+    @include dFlex($jc:space-between, $ai: center, $fd: row, $gap: 20px);
+    width: 100%;
+}
+
+.online-status{
+    @include dFlex($jc: flex-start);
+    width: 100%;
+    gap:15px;
+    color: #92C83E;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.email{
+    width: 100%;
+  @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $gap: 20px);
+  div{
+    @include dFlex($jc: center, $ai: center, $fd: column, $gap: 8px);
+    p{
+        margin:0;
+    }
+  }
+}
+
+.my-email-adress{
+    color:#1381FF;
+}
+
+.edit{
+    color:#535AF1;
+    cursor: pointer;
+    font-weight: 600;
+    &:hover{
+        font-weight: 800;
+    }
+}
+
+.close {
+    @include dFlex();
+    height: 40px;
+    width: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        background-color: $bgHover;
+        border-radius: 50%;
+    }
+}
+ 

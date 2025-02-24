@@ -1,0 +1,32 @@
+<div class="profil-dialog">
+
+    <div class="profile-header">
+        <h2>Profil</h2>
+        <div class="close-profil" (mouseenter)="isHoveredClose = true" (mouseleave)="isHoveredClose = false">
+            <img (click)="closeMyProfil()"  [src]="isHoveredClose ? 'img/icons/close-blue.png' : 'img/icons/close.png'" alt="">
+        </div>
+    </div>
+
+    <img class="avatar prifile-img" src="{{data.avatar}}" alt="">
+    <p class="profile-username">{{data.username}}</p>
+      
+    <div class="online-status">
+        @if (data.status == 'online') {
+        <img src="img/icons/Online.png" alt=""> <span class="active-online-status">Aktiv</span>
+        }@else  {
+            <img src="img/icons/Offline.png" alt=""> <span class="absent-online-status">Abwesend</span>
+        }
+    </div>
+
+    <div class="email">
+        <img src="img/icons/mail_icon.svg" alt="">
+        <div>
+            <p>E-mail-Adresse</p>
+            <p class="my-email-adress"> {{data.email}}</p>
+        </div>
+    </div>
+
+    <div class="button">
+        <button mat-dialog-close class="btn-blue">Nachricht</button>
+    </div>
+</div>

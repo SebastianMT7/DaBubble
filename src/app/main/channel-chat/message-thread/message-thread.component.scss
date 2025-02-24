@@ -1,0 +1,58 @@
+@import './../../../../styles.scss';
+
+Section{
+    position: relative;   
+    height: calc(100% - 300px); 
+}
+
+.thread{
+    height: 100%; 
+    padding-top: 10px;
+    overflow-y: auto;
+}
+
+.startChat{
+    @include dFlex($jc: flex-start, $ai: flex-start, $fd: column, $gap: 25px);
+    padding:0 45px;
+    position: absolute;
+    bottom: 0;
+
+    div:first-child{
+        display: flex;
+        align-items: flex-end;
+        gap: 25px;
+
+        img{
+            height: 100px;
+            width: 100px;
+            border-radius: 100%;
+        }
+
+        span{
+            font-size: 24px;
+            font-weight: 700;
+        }
+    }
+}
+
+.infoText{
+    color: #686868;
+    p{
+        margin: 0;
+        font-weight: 700;
+    }
+}
+
+.mobile-img{
+    height: 88px !important;
+    width: 88px !important;
+}
+
+.clickName{
+    cursor: pointer;
+    color: #535af1;
+
+    &:hover{
+        font-weight: 700;
+    }
+}

@@ -1,0 +1,38 @@
+<section class="main" [ngClass]="{
+    'mobile-height': breakpointObserver.isXSmallOrSmall, 
+    'no-gap': breakpointObserver.isXSmallOrSmall,
+    'no-maxWidth': breakpointObserver.isXSmallOrSmall}">
+    <header [ngClass]="{'padding-small': breakpointObserver.isXSmallOrSmall}">
+        <div class="channelThread">
+            <p>Thread</p>
+            @if (this.uiService.content==='channelChat') {
+            <span>#{{uiService.currChannel.title}}</span>
+            } @else {
+            <span>#personal Thread</span>
+            }
+        </div>
+        <div class="closeThread" (click)="this.uiService.closeThread()" (mouseenter)="isHoveredClose = true" (mouseleave)="isHoveredClose = false">
+            <img [src]="isHoveredClose ? 'img/icons/close-blue.png' : 'img/icons/close.png'" alt="">
+        </div>
+    </header>
+    <div class="chat">
+        <div class="thread">
+            <app-single-message [isThread]="true" [id]="uiService.currentMessage.msgId" [index]="-1"
+                [currentMessage]="uiService.currentMessage"></app-single-message>
+            <div class="divider">
+                <p>{{ this.uiService.findThread(uiService.currentMessage)?.messages?.length }}
+                    Antworten
+                </p>
+                <div class="line"></div>
+            </div>
+
+
+            @for (message of this.uiService.findThread(uiService.currentMessage)?.messages; track $index) {
+            <app-single-message [isThread]="true" [id]="message.msgId" [index]="$index"
+                [currentMessage]="message"></app-single-message>
+            }
+        </div>
+    </div>
+
+    <app-send-message placeholder="Antworten..." input="thread"></app-send-message>
+</section>

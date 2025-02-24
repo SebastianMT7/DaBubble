@@ -1,0 +1,144 @@
+@import './../../styles.scss';
+
+.main {
+    @include dFlex($gap: 20px);  
+    height: calc(100svh - 137px);
+    width: 100%;  
+}
+
+.right-content {
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: flex-start;
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+.full-width {
+  width: 100vw !important; 
+}
+
+.no-gap{
+  gap: 0 !important;
+}
+
+.d-none{
+  display: none !important;
+}
+
+.no-margin{
+  margin: 0 !important;
+}
+
+.mobile-height{
+  height: calc(100svh - 85px) !important;
+}
+
+app-side-nav {
+}
+
+app-channel-chat {
+  flex-grow: 1; 
+  width: calc(100% - 485px); 
+  margin-right: 20px;
+  box-sizing: border-box;
+}
+
+.no-thread {
+  app-channel-chat {
+    width: 100%; 
+  }
+
+  .thread {
+    display: none; 
+  }
+}
+
+
+app-thread {
+    box-sizing: border-box;
+    margin-right: 20px;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+
+  .loader {
+    margin: 0 auto;
+    width: 60px;
+    height: 50px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    
+    > div {
+      height: 100%;
+      width: 8px;
+      display: inline-block;
+      float: left;
+      margin-left: 2px;
+      -webkit-animation: delay 0.8s infinite ease-in-out;
+      animation: delay 0.8s infinite ease-in-out;
+    }
+    
+    .bar1{
+      background-color: #ED1E79 ;
+    }
+    .bar2{
+      background-color: #3FA9F5;
+      -webkit-animation-delay: -0.7s;
+      animation-delay: -0.7s;
+    }
+    .bar3{
+      background-color: #92c83e;
+      -webkit-animation-delay: -0.6s;
+      animation-delay: -0.6s;
+    }
+    .bar4{
+      background-color: #FBB03B;
+      -webkit-animation-delay: -0.5s;
+      animation-delay: -0.5s;
+    }
+    .bar5{
+      background-color: #ED1E79;
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+    }
+    .bar6{
+      background-color: #3FA9F5;
+      -webkit-animation-delay: -0.3s;
+      animation-delay: -0.3s;
+    }
+  }
+  
+  
+  @-webkit-keyframes delay {
+    0%, 40%, 100% { -webkit-transform: scaleY(0.05) }  
+    20% { -webkit-transform: scaleY(1.0) }
+  }
+  
+  @keyframes delay {
+    0%, 40%, 100% { 
+      transform: scaleY(0.05);
+      -webkit-transform: scaleY(0.05);
+    }  20% { 
+      transform: scaleY(1.0);
+      -webkit-transform: scaleY(1.0);
+    }
+  }
+
