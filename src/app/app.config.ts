@@ -16,10 +16,10 @@ export const appConfig: ApplicationConfig = {
      provideHttpClient(),
       provideFirebaseApp(() =>
          initializeApp({
-          "projectId":"dabubble379",
-          "appId":"1:778800442422:web:27e44ae4114f9279b9bc97",
-          "storageBucket":"dabubble379.appspot.com",
-          "apiKey":"AIzaSyCj1Qw3pyvijElMIDYirvzorPvO_fm3Tos",
-          "authDomain":"dabubble379.firebaseapp.com","messagingSenderId":"778800442422"})),
+          "projectId":"dabubble-bf3a5",
+          "appId":"1:996651423166:web:93df4d92850ab6a8cfd5ef",
+          "storageBucket":"dabubble-bf3a5.firebasestorage.app",
+          "apiKey":"AIzaSyAYIsQ-18r31PlMXih4iF29wqG0Awu7QEs",
+          "authDomain":"dabubble-bf3a5.firebaseapp.com","messagingSenderId":"996651423166"})),
            provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideStorage(() => getStorage()), provideAnimationsAsync()]
 };
