@@ -10,11 +10,9 @@
 
         <div class="workspace-container" [ngClass]="{'d-none': !breakpointObserver.isXSmallOrSmall || uiService.showSidenav()}">
             <div class="workspace-text">
-
                 <div (mouseenter)="isHoveredEdit = true" (mouseleave)="isHoveredEdit = false" class="edit-square" (click)="uiService.toggleSidenav()">
                     <img [src]="isHoveredEdit ? 'img/icons/arrow_left_blue.png' : 'img/icons/arrow_left_black.png'" alt="">
                 </div>
-
                 <img class="img" src="img/icons/Workspace-logo.png" alt="">
                 <p>Devspace</p>
             </div>
@@ -65,7 +63,6 @@
                                 </div>
                             </div>
 
-
                             <div *ngIf="obj.name === 'thread'">
                                 <div *ngFor="let message of obj.data.messages">
                                     <div (click)="openThreadMsg(obj.data, message)" *ngIf="message.text.toLowerCase().includes(this.searchbarService.searchName.toLowerCase())"
@@ -79,8 +76,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
+                </div>                
             </div>
         </div>
         <div (click)="openDialog()" class="user-container">

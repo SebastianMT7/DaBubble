@@ -38,7 +38,7 @@ export class EditProfileComponent {
   validUsername: boolean = true;
   showPasswordInput: boolean = false;
   isHoveredClose: boolean = false;
-  // passwordWrong = computed(() => this.authService.passwordWrong()); // Signal als computed-Wert
+  
   /**
  * Constructor for the EditProfileComponent.
  * Retrieves the current user's ID, subscribes to user data from Firebase, 

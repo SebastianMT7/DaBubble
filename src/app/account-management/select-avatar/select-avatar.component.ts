@@ -37,21 +37,21 @@ export class SelectAvatarComponent {
 
   constructor() { }
 
-/**
- * Funktion zum Triggern des versteckten Datei-Inputs.
- * Findet den Datei-Input-Element im DOM und simuliert einen Klick darauf, um die Datei-Auswahl zu starten.
- */  triggerFileInput(): void {
+  /**
+   * Triggers the hidden file input.
+   * Finds the file input element in the DOM and simulates a click to open the file selection dialog.
+   */
+  triggerFileInput(): void {
     const fileInput = document.querySelector('input[type="file"]') as HTMLElement;
     fileInput.click();
   }
 
-
-/**
- * Event-Handler für das Selektieren einer Datei.
- * Überprüft, ob eine Datei ausgewählt wurde, und ruft `uploadFile()` auf, um die Datei zu speichern und hochzuladen.
- * 
- * @param {Event} event - Das Event-Objekt, das durch das Selektieren einer Datei ausgelöst wird.
- */
+  /**
+   * Event handler for file selection.
+   * Checks if a file has been selected and calls `uploadFile()` to save and upload the file.
+   * 
+   * @param {Event} event - The event object triggered by selecting a file.
+   */
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -60,15 +60,14 @@ export class SelectAvatarComponent {
     }
   }
 
-
-/**
- * Funktion zum Hochladen einer Datei in Firebase Storage.
- * Bestimmt den Speicherort der Datei und verwendet `uploadFile` aus dem `storageService`, um die Datei hochzuladen.
- * Auf Erfolgreichmeldung wird die Download-URL gespeichert, andernfalls wird der Fehler in der Konsole ausgegeben.
- */
+  /**
+   * Uploads a file to Firebase Storage.
+   * Determines the file's storage path and uses `uploadFile` from the `storageService` to upload the file.
+   * On success, the download URL is saved. If an error occurs, it is logged to the console.
+   */
   uploadFile(): void {
     if (this.selectedFile) {
-      const filePath = `uploads/${this.selectedFile.name}`; // Speicherort in Firebase Storage
+      const filePath = `uploads/${this.selectedFile.name}`;
       this.storageService.uploadFile(filePath, this.selectedFile)
         .subscribe(
           (url) => this.downloadURL = url,
@@ -77,19 +76,19 @@ export class SelectAvatarComponent {
     }
   }
 
-/**
- * Setzt das Avatar-Bild für den Benutzer.
- * 
- * @param {string} avatar - Die URL des Avatar-Bildes.
- */
-  setAvatar(avatar: string) {
+  /**
+   * Sets the user's avatar image.
+   * 
+   * @param {string} avatar - The URL of the avatar image.
+   */
+  setAvatar(avatar: string): void {
     this.chosenAvatar = avatar;
   }
 
-/**
- * Sendet das Registrierungsformular.
- * Überprüft, ob die E-Mail bereits in Gebrauch ist, und navigiert entsprechend. Falls ein Fehler auftritt, wird eine Fehlermeldung angezeigt.
- */
+  /**
+   * Submits the registration form.
+   * Checks if the email is already in use and navigates accordingly. Displays an error message if a problem occurs.
+   */
   submitRegistration(): void {
     this.authService.register(this.currentData.email, this.currentData.username, this.currentData.password, this.chosenAvatar)
       .subscribe({
@@ -101,15 +100,14 @@ export class SelectAvatarComponent {
           console.log(err.code);
           if (err.code === 'auth/email-already-in-use') {
             this.registrationFailed = true;
-            this.authService.errorMessage = 'Email existiert bereits!';
+            this.authService.errorMessage = 'Email already exists!';
           } else {
             this.registrationFailed = true;
-            this.authService.errorMessage = 'Irgendetwas ist schief gelaufen!';
+            this.authService.errorMessage = 'Something went wrong!';
           }
           this.router.navigateByUrl('/register');
         }
-      })
+      });
   }
-
 
 }

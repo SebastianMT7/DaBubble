@@ -29,50 +29,51 @@ export class NewPasswordComponent {
   });
 
 /**
- * Handler für das Formular-Sendenereignis.
- * Führt das Zurücksetzen des Passworts durch und leitet dann nach einem Verzögerungszeitraum von 1 Sekunde zur Startseite um.
+ * Handler for the form submit event.
+ * Executes the password reset process and redirects to the homepage after a 1-second delay.
  */
-  onSubmit() {
-    this.resetPassword();
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 1000);
-  }
+onSubmit() {
+  this.resetPassword();
+  setTimeout(() => {
+    this.router.navigate(['/']);
+  }, 1000);
+}
 
 /**
- * Asynchrone Methode zum Zurücksetzen des Passworts.
- * Extrahiert den One-Time-Password-Code (oobCode) aus den URL-Parametern und das geänderte Passwort aus dem Formular.
- * Ruft Firebase `confirmPasswordReset` auf, um das Passwort zurückzusetzen.
- * Gibt bei Erfolg eine Erfolgsmeldung aus, andernfalls wird ein Fehler protokolliert.
- * @throws Fehler, falls beim Zurücksetzen des Passworts ein Problem auftritt.
+ * Asynchronous method to reset the password.
+ * Extracts the one-time password code (oobCode) from the URL parameters and the new password from the form.
+ * Calls Firebase's `confirmPasswordReset` to reset the password.
+ * Logs a success message on completion or an error in case of failure.
+ * @throws Error if an issue occurs during the password reset process.
  */
-  async resetPassword(): Promise<void> {
-    const auth = getAuth();
-    const urlParams = new URLSearchParams(window.location.search);
-    const oobCode = urlParams.get('oobCode');
-    let changedPassword = this.resetPasswordForm.get('firstPassword')?.value;
+async resetPassword(): Promise<void> {
+  const auth = getAuth();
+  const urlParams = new URLSearchParams(window.location.search);
+  const oobCode = urlParams.get('oobCode');
+  let changedPassword = this.resetPasswordForm.get('firstPassword')?.value;
 
-    if(oobCode && changedPassword) {
-      try {
-        await confirmPasswordReset(auth, oobCode, changedPassword);
-        //console.log("Passwort erfolgreich zurückgesetzt.");
-      } catch (error) {
-        console.error("Fehler beim Zurücksetzen des Passworts:", error);
-        throw error;
-      }
+  if(oobCode && changedPassword) {
+    try {
+      await confirmPasswordReset(auth, oobCode, changedPassword);
+      //console.log("Passwort erfolgreich zurückgesetzt.");
+    } catch (error) {
+      console.error("Fehler beim Zurücksetzen des Passworts:", error);
+      throw error;
     }
   }
+}
 
 /**
- * Überprüft, ob die eingegebenen Passwörter übereinstimmen.
- * Vergleicht die Werte des `firstPassword`-Controls und des `verifyPassword`-Controls.
- * Gibt `null` zurück, wenn die Passwörter übereinstimmen, andernfalls ein Objekt mit der Eigenschaft `notSame`.
- * @param {AbstractControl} control Das aktuelle Formularelement, das überprüft wird.
- * @returns {ValidationErrors | null} Rückgabeobjekt, das `null` bedeutet, wenn die Passwörter übereinstimmen oder ein Fehlerobjekt, wenn nicht.
+ * Checks if the entered passwords match.
+ * Compares the values of the `firstPassword` and `verifyPassword` input fields.
+ * Returns `null` if the passwords match, otherwise an object with the `notSame` property.
+ * @param {AbstractControl} control - The current form control being validated.
+ * @returns {ValidationErrors | null} - `null` if the passwords match, or an error object if they do not.
  */
-  private validateSamePassword(control: AbstractControl): ValidationErrors | null {
-    const password = control.parent?.get('firstPassword');
-    const confirmPassword = control.parent?.get('verifyPassword');
-    return password?.value == confirmPassword?.value ? null : { 'notSame': true };
-  }
+private validateSamePassword(control: AbstractControl): ValidationErrors | null {
+  const password = control.parent?.get('firstPassword');
+  const confirmPassword = control.parent?.get('verifyPassword');
+  return password?.value == confirmPassword?.value ? null : { 'notSame': true };
+}
+
 }

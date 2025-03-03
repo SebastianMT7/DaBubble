@@ -42,7 +42,6 @@ h1 {
         cursor: pointer;
         top: 32px;
         left: 32px;
-
     }
 
     .upload-box {
@@ -57,7 +56,6 @@ h1 {
     object-fit: cover;
     border-radius: 50%
 }
-
 
 .avatar-box {
     @include dFlex(flex-start);

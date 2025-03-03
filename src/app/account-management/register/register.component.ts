@@ -38,16 +38,13 @@ export class RegisterComponent {
     checkbox: this.fb.control('', {validators: [Validators.required]}),
   });
 
-
-  constructor() {
-  }
-
-
-  test() {
-   // console.log(this.form.checked);
-  }
-
-  
+/**
+ * Handles the form submission event.
+ * Retrieves user data from the form, including email, username, and password.
+ * Calls the `saveRegistrationData` method from the `authService` to store the registration data.
+ * Navigates the user to the avatar selection page.
+ * Resets any error messages in the `authService`.
+ */
   onSubmit(): void {
     let user = this.userForm.getRawValue()    
     this.authService.saveRegistrationData(user.email, user.username, user.password);

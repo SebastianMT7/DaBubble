@@ -18,16 +18,15 @@ export class IntroAnimationComponent implements OnInit {
 
 
   constructor(public authService: AuthService) {
-    //console.log(this.containerVisible);
   }
 
   /**
-   * Diese Methode wird beim Initialisieren der Komponente aufgerufen.
-   * Sie überprüft, ob `containerVisible` bereits gesetzt ist. Wenn nicht, wird es auf `true` und `showAnimation` des `authService` auf `true` gesetzt. Andernfalls wird `containerVisible` auf `false` und `showAnimation` auf `false` gesetzt. Nach einer Verzögerung von 3500 Millisekunden wird `containerVisible` ebenfalls auf `false` und `showAnimation` auf `false` gesetzt.
+   * This method is called when the component is initialized.
+   * It checks whether `containerVisible` is already set. If not, it sets it to `true` and also sets `showAnimation` in the `authService` to `true`.
+   * Otherwise, it sets both `containerVisible` and `showAnimation` to `false`.
+   * After a delay of 4000 milliseconds, it ensures that both `containerVisible` and `showAnimation` are set to `false`.
    */
   ngOnInit() {
-    //console.log(this.containerVisible);
-
     if (this.containerVisible === undefined) {
       this.containerVisible = true;
       this.authService.showAnimation = true;
@@ -41,10 +40,15 @@ export class IntroAnimationComponent implements OnInit {
     }, 4000);
   }
 
+  /**
+   * Called when an image has finished loading.
+   * It sets `imageLoaded` to `true` and triggers the animation by setting `startAnimation` to `true` after a short delay.
+   */
   onImageLoad() {
     this.imageLoaded = true;
     setTimeout(() => {
       this.startAnimation = true;
-    }, 0); // Animation starten, sobald das Bild geladen ist
+    }, 0); 
   }
 }
+

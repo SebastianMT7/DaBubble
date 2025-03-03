@@ -43,7 +43,6 @@ p{
         cursor: pointer;
         top: 32px;
         left: 32px;
-
     }
 }
 
@@ -52,7 +51,6 @@ form {
     flex-direction: column;
     width: 100%;
     gap: 14px;
-
 
     .input-control{
         display: flex;
@@ -65,7 +63,6 @@ form {
             height: 16px;
             color: red;
         }
-
 
         .inputfield-container {
             display: flex;

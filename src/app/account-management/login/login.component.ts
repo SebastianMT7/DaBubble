@@ -47,85 +47,72 @@ export class LoginComponent implements OnInit {
     this.authService.errorMessage = '';
   }
 
-  /**
-   * Aufgerufen beim Initialisieren der Komponente. 
-   * Überprüft, ob der aktuelle Benutzer angemeldet ist. Wenn ja, wird der Benutzer zur Hauptansicht weitergeleitet.
+    /**
+   * Called when the component is initialized.
+   * Checks if the current user is logged in. If true, the user is redirected to the main view.
    */
-  ngOnInit() {
-    if (this.authService.currentUserSig()) {
-      this.router.navigate(['/main']);
+    ngOnInit() {
+      if (this.authService.currentUserSig()) {
+        this.router.navigate(['/main']);
+      }
+    }
+  
+    /**
+     * Handles user login.
+     * Retrieves user data from the form and calls the `login` method from the `authService`.
+     * Subscribes to the login process.
+     * On successful login, the user is redirected to the main view.
+     * On error, appropriate error messages are set and displayed.
+     */
+    login(): void {
+      let user = this.userForm.getRawValue();
+      this.loginFailed = false;
+      this.errorEmail = false;
+      this.errorPassword = false;
+      this.authService.login(user.email, user.password)
+        .subscribe({
+          next: () => {},
+          error: (err) => {          
+            if (err.code === "auth/user-not-found") {
+              this.loginFailed = true;
+              this.errorEmail = true;
+              this.userForm.get('password')?.reset();
+            }
+            if (err.code === "auth/wrong-password") {
+              this.loginFailed = true;
+              this.errorPassword = true;
+              this.userForm.get('password')?.reset();
+            }
+          }
+        });
+    }
+  
+    /**
+     * Handles guest login.
+     * Executes the guest login process. 
+     * On successful login, the user is redirected to the main view.
+     * On error, the login attempt is marked as failed.
+     */
+    async guestLogin() {
+      try {
+        await this.authService.guestLogin();
+        this.router.navigate(['/main']);
+      } catch (error) {
+        this.loginFailed = true;
+      }
+    }
+  
+    /**
+     * Removes the email error message.
+     */
+    removeErrorMsgEmail() {
+      this.errorEmail = false;
+    }
+  
+    /**
+     * Removes the password error message.
+     */
+    removeErrorMsgPwt() {
+      this.errorPassword = false;
     }
   }
-
-
-  // guestLogin() {
-  //   this.authService.signInAnonymously();
-  // }
-
-
-  /**
-   * Methode zur Anmeldung eines Benutzers.
-   * Erstellt einen Benutzer-Objekt aus dem Formular und ruft die `login`-Methode des `authService` auf.
-   * Abonniert die Rückmeldungen des Login-Vorgangs.
-   * Bei erfolgreichem Login wird der Benutzer zur Hauptansicht weitergeleitet.
-   * Bei Fehlern werden entsprechende Fehlermeldungen gesetzt und angezeigt.
-   */
-  login(): void {
-    let user = this.userForm.getRawValue()
-    this.loginFailed = false;
-    this.errorEmail = false;
-    this.errorPassword = false;
-    this.authService.login(user.email, user.password)
-      .subscribe({
-        next: () => {
-
-        },
-
-        error: (err) => {
-          //console.log(err.code);          
-          if (err.code === "auth/user-not-found") {
-            this.loginFailed = true;
-            this.errorEmail = true;
-            this.userForm.get('password')?.reset();
-          }
-          if (err.code === "auth/wrong-password") {
-            this.loginFailed = true;
-            this.errorPassword = true;
-            this.userForm.get('password')?.reset();
-          }
-        }
-      })
-    // .pipe(
-    //   catchError((error) => {
-    //     this.loginFailed = true;
-    //     console.log('loginFailed', this.loginFailed);
-
-    //     return of(null);  
-    //   })
-    // )
-    // .subscribe(() => {
-    // })
-  }
-
-  /**
-   * Methode zur Durchführung der Anmeldung als Gast.
-   * Führt den Gast-Login-Vorgang aus und bei erfolgreichem Login wird der Benutzer zur Hauptansicht weitergeleitet.
-   * Bei Fehlern wird der Login-Versuch als fehlgeschlagen markiert.
-   */
-  async guestLogin() {
-    try {
-      await this.authService.guestLogin();
-      this.router.navigate(['/main']);
-    } catch (error) {
-      this.loginFailed = true;
-    }
-  }
-
-  removeErrorMsgEmail() {
-    this.errorEmail = false;
-  }
-
-  removeErrorMsgPwt() {
-    this.errorPassword= false;
-  }
-}

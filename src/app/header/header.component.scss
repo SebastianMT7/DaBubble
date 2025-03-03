@@ -20,7 +20,7 @@ header {
 
 .logo{
   @include dFlex(flex-start);
-  flex-shrink: 0; /* Verhindert, dass das Logo schrumpft */
+  flex-shrink: 0;
   margin: 20px 0px 20px 20px;
   width: 316px;
 }
@@ -40,7 +40,7 @@ header {
 }
 
 .search-container {
-  flex-grow: 1; /* Lässt die Suchleiste so viel Platz wie möglich einnehmen */
+  flex-grow: 1;
   display: flex;
 }
 
@@ -84,8 +84,8 @@ header {
 
 .input-container {
   position: relative;
-  width: 100%; /* Nimmt die volle Breite des Containers ein */
-  max-width: unset; /* Entfernt eventuell übernommene Einschränkungen */
+  width: 100%;
+  max-width: unset; 
   display: flex;
 
   > input {
@@ -94,7 +94,7 @@ header {
     font-family: 'Nunito';
     border-radius: 42px;
     border: none;
-    width: 100%; /* Nimmt den verfügbaren Platz im flex-Container ein */
+    width: 100%;
     padding: 17.5px 45px;
 
     &:focus {
@@ -113,9 +113,7 @@ header {
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-
   }
-
 }
 
 .user-container {
@@ -156,8 +154,6 @@ header {
   bottom: 5px;
   right: 5px;
 }
-
-
 
 .single-search {
   padding: 4px 20px;
@@ -246,7 +242,6 @@ header {
       width: 30px;
       height: 30px;
       right: 20px;
-
     }
     >input {
       font-size: 20px;
@@ -258,6 +253,7 @@ header {
     font-size: 16px;
   }
 }
+
 @media (max-width: 1050px) {
   .input-container {
     >input {
@@ -267,7 +263,6 @@ header {
       width: 25px;
       height: 25px;
       right: 10px;
-
     }
   }
   .user-container {
