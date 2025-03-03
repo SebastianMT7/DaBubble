@@ -7,12 +7,13 @@
         <img src="img/icons/tag.png" alt="">
         <h1>{{ channel?.title }}</h1>
     </div>
-    <div [ngClass]="editName ? 'hide-border': ''"  class="channel-name-container">
+    <div [ngClass]="editName ? 'hide-border': ''" class="channel-name-container">
         <div class="edit-name">
             <h2>Channel-Name</h2>
-            <p [ngClass]="{'disabled-link' : existChannel}" (click)="editName = !editName" (click)="editChannelName()">{{ changeName }}</p>
+            <p [ngClass]="{'disabled-link' : existChannel || welcomeChannel}" (click)="editName = !editName"
+                (click)="editChannelName()">{{ changeName }}</p>
         </div>
-        <div [ngClass]="editName ? 'hide-channel-name': 'show-channel-name'"  class="channel-name">
+        <div [ngClass]="editName ? 'hide-channel-name': 'show-channel-name'" class="channel-name">
             <img src="img/icons/tag.png" alt="">
             <p>{{ channel?.title }}</p>
         </div>
@@ -25,16 +26,18 @@
         </div>
     </div>
 
-    <div [ngClass]="editDesc ? 'hide-border': ''"  class="channel-description-container" [ngClass]="{'margin-b-20': breakpointObserver.isXSmallOrSmall}">
+    <div [ngClass]="editDesc ? 'hide-border': ''" class="channel-description-container"
+        [ngClass]="{'margin-b-20': breakpointObserver.isXSmallOrSmall}">
         <div class="edit-name">
             <h2>Beschreibung</h2>
-            <p (click)="editDesc = !editDesc" (click)="editChannelDesc()">{{ changeDesc }}</p>
+            <p [ngClass]="{'disabled-link' : welcomeChannel}" (click)="editDesc = !editDesc" (click)="editChannelDesc()">{{ changeDesc }}</p>
         </div>
         <div [ngClass]="editDesc ? 'hide-channel-desc': 'show-channel-desc'" class="channel-desc">
             <p class="description">{{ channel?.description }}</p>
         </div>
         <div class="desc-input-container">
-            <input [(ngModel)]="descInput"  [ngClass]="editDesc ? 'show-channel-desc': 'hide-channel-desc'" placeholder="Dein Text hier"  type="text">
+            <input [(ngModel)]="descInput" [ngClass]="editDesc ? 'show-channel-desc': 'hide-channel-desc'"
+                placeholder="Dein Text hier" type="text">
         </div>
         <div class="line"></div>
         <div class="created-from">

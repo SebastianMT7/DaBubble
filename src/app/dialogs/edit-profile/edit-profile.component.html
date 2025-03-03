@@ -37,7 +37,7 @@
                 </div>
             </div> -->
 
-            <div class="email" *ngIf="showPasswordInput">
+            <!-- <div class="email" *ngIf="showPasswordInput">
                 <div>
                     <img src="img/icons/login/password_icon.svg" alt="">
                     <label for="email">Passwort</label>
@@ -45,17 +45,19 @@
                 <div class="inputfield-container">
                     <input [(ngModel)]="inputPassword" id="password" type="password">
                 </div>
-                @if (passwordWrong()) {
+                @if (this.authService.passwordWrong) {
                 <small class="hint">Das eingegebene Passwort ist falsch!</small>
                 }
-            </div>
+            </div> -->
         </div>
 
         <div class="buttons" [ngClass]="{'d-none': isEditingAvatar}">
             <button mat-dialog-close class="btn-white">Abrechen</button>
-            <button (click)="verifyPassword()" [disabled]="!validUsername" class="btn-blue"
+            <button (click)="changeProfil()" [disabled]="!validUsername" class="btn-blue">Speichern</button>
+          
+                      <!-- <button (click)="verifyPassword()" [disabled]="!validUsername" class="btn-blue"
                 *ngIf="!showPasswordInput">Speichern</button>
-            <button (click)="changeProfil()" class="btn-blue" *ngIf="showPasswordInput">Bestätigen</button>
+          <button (click)="changeProfil()" class="btn-blue" *ngIf="showPasswordInput">Bestätigen</button> -->
         </div>
     </div>
 
