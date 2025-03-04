@@ -18,6 +18,7 @@
   width: 100%;
   @include dFlex($jc: center, $ai: center, $fd: row, $gap: 0);
 }
+
 .avatar-image {
   width: 200px;
   border-radius: 200px;

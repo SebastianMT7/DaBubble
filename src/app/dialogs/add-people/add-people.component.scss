@@ -8,7 +8,6 @@
   position: relative;
   z-index: 1;
 
-
   >h1 {
     margin: 0;
     font-size: 24px;
@@ -35,8 +34,6 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-
-
 }
 
 .first-row {
@@ -48,7 +45,6 @@
   >p {
     margin: 0;
   }
-
 }
 
 .second-row {
@@ -59,7 +55,6 @@
   >p {
     margin: 0;
   }
-
 }
 
 input[type="radio"] {
@@ -80,7 +75,6 @@ input[type="radio"] {
     height: 12px;
     border-radius: 50%;
     background: #444DF2;
-
   }
 }
 
@@ -97,7 +91,6 @@ input[type="radio"] {
     font-weight: 500;
     font-size: 18px;
 
-
     &:hover {
       background: #797EF3;
       cursor: pointer;
@@ -108,7 +101,6 @@ input[type="radio"] {
       background: #A0A0A0; 
       cursor: default;
     }
-
   }
 }
 
@@ -126,7 +118,6 @@ input[type="radio"] {
     cursor: pointer;
     background: #ECEEFE;
     border-radius: 100%;
-
   }
 }
 
@@ -164,8 +155,6 @@ input[type="radio"] {
   display: flex;
   align-items: center;
   gap: 10px;
-
-
 }
 
 .single-user-hover {
@@ -179,9 +168,7 @@ input[type="radio"] {
     background: #ECEEFE;
     border-radius: 30px;
     color: #535AF1;
-
   }
-
 }
 
 .avatar img {
@@ -199,7 +186,6 @@ input[type="radio"] {
 .showUserDialog {
   display: flex !important;
   flex-direction: column;
-
 }
 
 .user-dialog {
@@ -220,8 +206,6 @@ input[type="radio"] {
   overflow-y: scroll;
   box-sizing: border-box;
 }
-
-
 
 .hideUserDialog {
   display: none;
@@ -288,7 +272,6 @@ input[type="radio"] {
       margin-right: 8px;
     }
   }
-
 }
 
 .user-close {

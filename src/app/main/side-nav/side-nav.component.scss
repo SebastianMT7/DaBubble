@@ -14,15 +14,15 @@ section {
     margin-left: 20px;
 }
 
-.no-margin{
+.no-margin {
     margin: 0 !important;
 }
 
-.mobile-height{
+.mobile-height {
     height: calc(100svh - 85px) !important;
-  }
+}
 
-.scroll-container{
+.scroll-container {
     height: 100%;
     overflow-y: auto;
     width: 100%;
@@ -30,7 +30,7 @@ section {
     box-sizing: border-box;
 }
 
-.logo{
+.logo {
     @include dFlex(flex-start);
     margin: 20px;
 }
@@ -43,7 +43,6 @@ section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 .edit-square {
@@ -72,7 +71,6 @@ section {
         border-radius: 100%;
         cursor: pointer;
     }
-
 }
 
 .workspace-text {
@@ -107,13 +105,11 @@ section {
         cursor: pointer;
 
     }
-
 }
 
 .channel-row {
     display: flex;
     flex-direction: column;
-
 }
 
 .developer {
@@ -123,11 +119,9 @@ section {
     gap: 10px;
     flex-direction: column;
 
-
     >p {
         font-size: 18px;
     }
-
 }
 
 .dev-hover {
@@ -147,9 +141,6 @@ section {
         background: #ECEEFE;
         border-radius: 20px;
         cursor: pointer;
-
-
-
     }
 }
 
@@ -195,7 +186,7 @@ section {
     width: 100%;
 }
 
-.w-100{
+.w-100 {
     width: 100%;
 }
 
@@ -206,15 +197,12 @@ section {
     gap: 10px;
     width: 100%;
 
-
     &:hover {
         cursor: pointer;
         background: #ECEEFE;
         border-radius: 30px;
         color: #535AF1;
-
     }
-
 }
 
 .avatar-img {
@@ -228,9 +216,6 @@ section {
     visibility: hidden;
     max-height: 0;
     display: none;
-
-
-
 }
 
 .username p {
@@ -275,7 +260,6 @@ section {
     >img {
         transform: rotate(90deg);
     }
-
 }
 
 .status {
@@ -284,41 +268,36 @@ section {
     position: absolute;
     bottom: 5px;
     right: 0px;
-
 }
 
 .avatar-side-nav {
     position: relative;
-
 }
 
 .search-container {
     display: flex;
     flex-direction: column;
     position: relative;
-  }
-  
-  .search-username {
+}
+
+.search-username {
     font-size: 18px;
     margin: 0;
-  }
-  
-  .search-avatar {
+}
+
+.search-avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-  }
+}
 
-  .single-user {
+.single-user {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+}
 
-
-
-
-  .single-search {
+.single-search {
     padding: 4px 20px;
     display: flex;
     align-items: center;
@@ -326,22 +305,18 @@ section {
     gap: 10px;
     width: 100%;
     box-sizing: border-box;
-  
 
-    
     &:hover {
-      cursor: pointer;
-      background: #ECEEFE;
-      border-radius: 30px;
-      color: #535AF1;
-  
+        cursor: pointer;
+        background: #ECEEFE;
+        border-radius: 30px;
+        color: #535AF1;
     }
-  
-  }
+}
 
-  .input-container {
+.input-container {
     position: relative;
-    width: 100%; 
+    width: 100%;
     max-width: unset;
     display: flex;
 
@@ -351,33 +326,32 @@ section {
         top: 50%;
         transform: translateY(-50%);
         pointer-events: none;
-    
-      }
-  
-    > input {
-      box-sizing: border-box;
-      font-size: 18px;
-      font-family: 'Nunito';
-      border-radius: 42px;
-      border: none;
-      width: 100%; 
-      padding: 17.5px 45px;
-      box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
-      border: 1px solid #ADB0D9;
 
-  
-      &:focus {
-        outline: unset;
-      }
-  
-      &:hover {
-        border: 1px solid #444DF2;
-        transition: ease-in-out 100ms;
-      }
+    }
+
+    >input {
+        box-sizing: border-box;
+        font-size: 18px;
+        font-family: 'Nunito';
+        border-radius: 42px;
+        border: none;
+        width: 100%;
+        padding: 17.5px 45px;
+        box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.08);
+        border: 1px solid #ADB0D9;
+
+        &:focus {
+            outline: unset;
+        }
+
+        &:hover {
+            border: 1px solid #444DF2;
+            transition: ease-in-out 100ms;
+        }
     }
 }
 
-.new-msg-btn{
+.new-msg-btn {
     background-color: #444DF2;
     border-radius: 50%;
     position: absolute;
@@ -386,17 +360,16 @@ section {
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
     @include dFlex();
 
-
-    &:hover{
+    &:hover {
         scale: 1.1;
     }
 
-    .postion-box{
+    .postion-box {
         position: relative;
         height: 60px;
         width: 60px;
 
-        img{
+        img {
             position: relative;
             top: 16px;
             left: 18px;
@@ -404,19 +377,13 @@ section {
             width: 24px;
         }
     }
-    
-
 }
 
-.thread-img{
+.thread-img {
     height: 32px;
     width: 32px;
-  }
-
-.no-padding{
-    padding: 0px !important;
 }
 
-
-
-  
+.no-padding {
+    padding: 0px !important;
+}

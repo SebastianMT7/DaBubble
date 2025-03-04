@@ -53,11 +53,10 @@ export class ChannelChatComponent {
   ) {
     this.initializeUserSubscription();
     this.initializeChannelSubscription();
-    // this.uiService.toggleTextarea(); vv
   }
 
   /**
-   * Initialisiert das Abonnement für den ausgewählten Benutzer.
+   * Initializes the subscription for the selected user.
    */
   private initializeUserSubscription() {
     this.userDataService.selectedUser.subscribe((user) => {
@@ -66,8 +65,9 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Verarbeitet das ausgewählte Benutzerereignis.
-   * @param user - Der aktuell ausgewählte Benutzer.
+   * Handles the selected user event.
+   *
+   * @param user - The currently selected user.
    */
   private handleSelectedUser(user: any) {
     this.user = user;
@@ -75,7 +75,7 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Initialisiert das Abonnement für den aktuellen Kanal.
+   * Initializes the subscription for the current channel.
    */
   private initializeChannelSubscription() {
     this.channelService.currentChannel$.subscribe(async (channel) => {
@@ -84,37 +84,36 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Verarbeitet das Ereignis, wenn sich der aktuelle Kanal ändert.
-   * @param channel - Der aktuelle Kanal.
+   * Handles the event when the current channel changes.
+   *
+   * @param channel - The current channel.
    */
   private async handleChannelChange(channel: any) {
     this.channel = channel;
     this.uiService.currChannel = channel;
 
     if (this.channel.users) {
-      this.allUsersFromAChannel = [...this.channel.users]; // Nutzer-IDs kopieren
+      this.allUsersFromAChannel = [...this.channel.users]; 
     }
     await this.loadUsersFromChannel();
   }
 
   /**
-   * Lädt die Benutzerdaten für alle Benutzer eines Kanals.
+   * Loads user data for all users in a channel.
    */
   private async loadUsersFromChannel() {
     try {
       const userPromises = this.allUsersFromAChannel.map((userId: any) =>
         this.firebaseService.getCurrentUser(userId)
       );
-      // Warten, bis alle Benutzerdaten geladen sind
       const users = await Promise.all(userPromises);
-      this.allUsersFromAChannel = users; // Speichere Benutzer
+      this.allUsersFromAChannel = users;
     } catch (error) {
-      // console.error("Fehler beim Laden der Benutzer aus dem Kanal:", error);
     }
   }
 
   /**
-   * Öffnet den Dialog zum Bearbeiten eines Kanals.
+   * Opens the dialog to edit a channel.
    */
   openEditChannel(): void {
     const dialogRef = this.dialog.open(EditChannelComponent, {
@@ -126,7 +125,7 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Öffnet den Dialog zum Anzeigen der Mitglieder in einem Kanal.
+   * Opens the dialog to show members in a channel.
    */
   openShowMembersDialog() {
     const dialogRef = this.dialog.open(ShowMemberInChannelComponent, {
@@ -136,9 +135,9 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Öffnet einen Dialog basierend auf der Bildschirmgröße:
-   * - Kleiner Bildschirm: Zeigt Mitglieder im Kanal an.
-   * - Größerer Bildschirm: Öffnet den Dialog zum Hinzufügen zu einem Kanal.
+   * Opens a dialog based on screen size:
+   * - Small screens: Shows channel members.
+   * - Larger screens: Opens the dialog to add users to a channel.
    */
   openChannelDialog() {
     if (this.breakpointObserver.isXSmallOrSmall) {
@@ -149,7 +148,7 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Öffnet den Dialog, um Benutzer zu einem ausgewählten Kanal hinzuzufügen.
+   * Opens the dialog to add users to the selected channel.
    */
   addToChoosenChannelDialog() {
     const dialogRef = this.dialog.open(AddToChoosenChannelComponent, {
@@ -159,7 +158,7 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Öffnet den Dialog, um das Profil eines Benutzers anzuzeigen.
+   * Opens the dialog to display a user's profile.
    */
   openUserProfilDialog() {
     const dialogRef = this.dialog.open(ProfilComponent, {
@@ -168,22 +167,22 @@ export class ChannelChatComponent {
   }
 
   /**
-   * Gibt die ersten `n` Elemente eines Arrays zurück.
-   * 
-   * @param {number} n - Die Anzahl der Elemente, die zurückgegeben werden sollen.
-   * @param {any[]} array - Das Array, aus dem die Elemente entnommen werden.
-   * @returns {any[]} Ein Array mit den ersten `n` Elementen.
+   * Returns the first `n` elements of an array.
+   *
+   * @param {number} n - The number of elements to return.
+   * @param {any[]} array - The array from which elements are taken.
+   * @returns {any[]} An array containing the first `n` elements.
    */
   getFirstNElements(n: number, array: any): any[] {
     return array.slice(0, Math.min(array.length, n));
   }
 
   /**
-   * Setzt die aktive Unterhaltung für einen Benutzer.
-   * - Wenn keine Unterhaltung existiert, wird eine neue gestartet.
-   * - Der Benutzer wird zu den ausgewählten Unterhaltungen hinzugefügt, falls er nicht bereits existiert.
-   * 
-   * @param {User} obj - Der Benutzer, für den die Unterhaltung gesetzt werden soll.
+   * Sets the active conversation for a user.
+   * - If no conversation exists, a new one is started.
+   * - Adds the user to the selected conversations if not already present.
+   *
+   * @param {User} obj - The user for whom the conversation should be set.
    */
   async setConv(obj: User) {
     let conv = this.convService.searchForConversation(obj);
@@ -194,39 +193,38 @@ export class ChannelChatComponent {
     }
     if (conv) {
       const exists = this.uiService.selectedConversations.some(
-        (item) => this.uiService.isUser(item) && item.uid === obj.uid // Prüfung, ob `item` ein User ist
+        (item) => this.uiService.isUser(item) && item.uid === obj.uid 
       );
       if (!exists) {
-        this.uiService.selectedConversations.unshift(obj); // Füge nur hinzu, wenn es nicht existiert
+        this.uiService.selectedConversations.unshift(obj); 
       }
     }
     this.searchbarService.emptyMsgInput();
   }
 
   /**
-   * Setzt den aktiven Kanal und fügt ihn zu den ausgewählten Konversationen hinzu, falls er noch nicht vorhanden ist.
-   * 
-   * @param {Channel} obj - Der Kanal, der gesetzt werden soll.
+   * Sets the active channel and adds it to the selected conversations if not already present.
+   *
+   * @param {Channel} obj - The channel to set.
    */
   setChannel(obj: Channel) {
     const exists = this.uiService.selectedConversations.some(
-      (item) => this.uiService.isChannel(item) && item.chaId === obj.chaId // Prüfung, ob `item` ein Channel ist
+      (item) => this.uiService.isChannel(item) && item.chaId === obj.chaId
     );
 
     if (!exists) {
-      this.uiService.selectedConversations.unshift(obj); // Füge nur hinzu, wenn es nicht existiert
+      this.uiService.selectedConversations.unshift(obj);
     }
     this.searchbarService.emptyMsgInput();
   }
 
   /**
-   * Entfernt einen Empfänger aus der Liste der ausgewählten Konversationen.
-   * 
-   * @param {number} i - Der Index des zu entfernenden Empfängers in der Liste.
+   * Removes a recipient from the list of selected conversations.
+   *
+   * @param {number} i - The index of the recipient to remove from the list.
    */
   removeReceiver(i: number) {
     this.uiService.selectedConversations.splice(i, 1);
   }
-
 
 }

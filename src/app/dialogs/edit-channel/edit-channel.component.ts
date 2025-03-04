@@ -46,7 +46,6 @@ export class EditChannelComponent implements OnInit {
     private authService: AuthService,
     private firebaseService: FirebaseService,
     public breakpointObserver: BreakpointObserverService
-
   ) { }
 
   /**
@@ -126,13 +125,11 @@ export class EditChannelComponent implements OnInit {
   }
 
   /**
- Checks if the entered channel name is valid and not already in use.
-*
-* The function trims the input title to remove leading and trailing whitespace. 
-* It then checks if the title matches any existing channel title in the 
-* `allChannels` array from the Firebase service.
-*
- */
+   * Checks if the entered channel name is valid and not already in use.
+   * The function trims the input title to remove leading and trailing whitespace. 
+   * It then checks if the title matches any existing channel title in the 
+   * `allChannels` array from the Firebase service.
+   */
   checkChannelName() {
     let trimTitle = this.titleInput.trim();
     let checkName = this.firebaseService.allChannels.some(channel => channel.title === trimTitle)
@@ -142,6 +139,6 @@ export class EditChannelComponent implements OnInit {
     else {
       this.existChannel = true;
     }
-
   }
+  
 }

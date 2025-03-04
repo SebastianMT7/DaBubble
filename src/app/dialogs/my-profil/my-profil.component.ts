@@ -26,12 +26,17 @@ export class MyProfilComponent {
       public dialogRef: MatDialogRef<MyProfilComponent>
     ){}
 
+   /**
+   * opens the edit profil dialog
+   */ 
   openEditProfileDialog() {
     const dialogRef = this.dialog.open(EditProfileComponent, {
     });
   }
 
-
+   /**
+   * closes the my profil dialog
+   */ 
   closeMyProfil(): void {
     this.dialogRef.close();
   }

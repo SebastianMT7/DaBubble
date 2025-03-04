@@ -117,7 +117,10 @@ export class AddToChoosenChannelComponent {
     let allUser = currentUser.concat(newUser);
     return allUser;
   }
-
+  
+  /**
+   * close Add to choosen Channel Dialog
+   */
   closeAddToChannel(): void {
     this.dialogRef.close();
   }

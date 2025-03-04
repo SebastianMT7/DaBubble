@@ -26,7 +26,6 @@
                 <div class="line"></div>
             </div>
 
-
             @for (message of this.uiService.findThread(uiService.currentMessage)?.messages; track $index) {
             <app-single-message [isThread]="true" [id]="message.msgId" [index]="$index"
                 [currentMessage]="message"></app-single-message>

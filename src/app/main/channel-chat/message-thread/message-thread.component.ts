@@ -10,7 +10,7 @@ import { ChannelService } from '../../../services/channel.service';
 @Component({
   selector: 'app-message-thread',
   standalone: true,
-  imports: [SingleMessageComponent,CommonModule],
+  imports: [SingleMessageComponent, CommonModule],
   templateUrl: './message-thread.component.html',
   styleUrl: './message-thread.component.scss'
 })
@@ -26,9 +26,12 @@ export class MessageThreadComponent {
   ) {
     this.userDataService.selectedUser.subscribe((user) => {
       this.user = user;
-    });    
+    });
   }
 
+  /**
+   * scrolled to the last message of the thread
+   */
   ngOnInit() {
     this.uiService.scrollTrigger$.subscribe((elementId: string) => {
       setTimeout(() => {
@@ -40,5 +43,5 @@ export class MessageThreadComponent {
         }
       }, 0);
     });
-  }  
+  }
 }

@@ -20,6 +20,9 @@ export class ProfilComponent {
     
   }
 
+  /**
+  * closes the my profil dialog
+  */ 
   closeMyProfil(): void {
     this.dialogRef.close();
   }

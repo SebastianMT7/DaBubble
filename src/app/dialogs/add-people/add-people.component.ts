@@ -22,6 +22,7 @@ export class AddPeopleComponent {
   searchName: string = "";
   currentUser: any = '';
   isInputEmpty = false;
+
   constructor(
     public firebaseService: FirebaseService,
     public dialogRef: MatDialogRef<AddPeopleComponent>,
@@ -47,15 +48,25 @@ export class AddPeopleComponent {
     this.isInputEmpty = false;
   }
 
-  onCheckboxChange(event: any) {
-    if (event.target.checked) {
-    } else {
-    }
+ /**
+ * Handles the checkbox change event.
+ * Executes different logic depending on whether the checkbox is checked or unchecked.
+ * 
+ * @param {Event} event - The event object triggered by the checkbox change.
+ */
+onCheckboxChange(event: any): void {
+  if (event.target.checked) {
+  } else {
   }
+}
 
-  emptyInput() {
-    this.isInputEmpty = this.firebaseService.selectedUsers.length === 0;
-  }
+/**
+ * Checks if the input is empty.
+ * Sets the `isInputEmpty` property based on whether the `selectedUsers` array in the `firebaseService` is empty.
+ */
+emptyInput(): void {
+  this.isInputEmpty = this.firebaseService.selectedUsers.length === 0;
+}
 
    /**
    * filter the list of users based on the search input

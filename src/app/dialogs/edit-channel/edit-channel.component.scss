@@ -19,7 +19,7 @@
     pointer-events: none;
     color: #A0A0A0 !important;
     text-decoration: none;
-  }
+}
 
 .close-container {
     width: 40px;
@@ -35,7 +35,6 @@
         cursor: pointer;
         background: #ECEEFE;
         border-radius: 100%;
-
     }
 }
 
@@ -105,7 +104,6 @@
             font-weight: 700;
             cursor: pointer;
         }
-
     }
 }
 
@@ -131,8 +129,6 @@
     >p {
         font-size: 24px;
         color: #535AF1;
-
-
     }
 }
 
@@ -150,13 +146,12 @@
         color: white;
         font-size: 18px;
         font-weight: 500;
+
         &:hover {
             background: #797EF3;
             cursor: pointer;
         }
     }
-
-   
 }
 
 .name-input-container {
@@ -186,7 +181,6 @@
         margin-top: 34px;
         position: absolute;
         left: 20px;
-     
     }
 }
 
@@ -223,7 +217,6 @@
 
     >input {
         margin-top: 13px;
-      
         border-radius: 40px;
         padding: 18px 48px;
         border: 1px solid #ADB0D9;
@@ -241,40 +234,41 @@
     }
 }
 
-    @media (max-width: 500px) {
-        .channel-container {
-            padding: 20px;
-        }
-        .close-container {
-            top: 20px;
-            right: 20px;
-        }
-        .created-from {
-            >p {
-                font-size: 20px;
-            }
-        }
-        .name-input-container {
-            >input {
-                padding: 12px 48px;
-            }
-        }
-        .desc-input-container {
-            >input {
-                padding: 12px 24px;
-            }
-        }
-
-       
-
+@media (max-width: 500px) {
+    .channel-container {
+        padding: 20px;
     }
 
-.hide{
+    .close-container {
+        top: 20px;
+        right: 20px;
+    }
+
+    .created-from {
+        >p {
+            font-size: 20px;
+        }
+    }
+
+    .name-input-container {
+        >input {
+            padding: 12px 48px;
+        }
+    }
+
+    .desc-input-container {
+        >input {
+            padding: 12px 24px;
+        }
+    }
+}
+
+.hide {
     display: none;
     color: #FF0000;
 }
 
-.show{
+.show {
     display: block;
     color: #FF0000;
 }

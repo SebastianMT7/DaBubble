@@ -24,6 +24,9 @@ export class ThreadComponent {
     this.uiService.showThread = false;
   }
   
+  /**
+   * focused the current textarea
+   */
   ngAfterViewInit() {
     if (this.textArea) {
       setTimeout(() => {

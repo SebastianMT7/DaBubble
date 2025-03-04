@@ -6,9 +6,9 @@
         }
 
         @empty {
-
         }
-        }@else {
+
+        } @else {
         @for (message of this.fiBaService.currentConversation.messages; track $index) {
         <app-single-message [id]="message.msgId" [index]="$index" [currentMessage]="message"></app-single-message>
         }

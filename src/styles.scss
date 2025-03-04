@@ -29,11 +29,11 @@ app-header-sign {
   width: 100%;
 }
 
-.d-none{
+.d-none {
   display: none !important;
 }
 
-.margin-b-20{
+.margin-b-20 {
   margin-bottom: 20px;
 }
 
@@ -45,27 +45,12 @@ app-header-sign {
   min-width: max-content;
 }
 
-.submit-mobile{
+.submit-mobile {
   gap: 16px !important;
   justify-content: space-between !important;
 }
 
-.close {
-  background-image: url("/img/icons/close.png");
-  height: 40px;
-  width: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-
-  &:hover {
-    background-image: url("/img/icons/close-blue.png");
-    background-color: $bgHover;
-    border-radius: 50%;
-  }
-}
-
-.mat-bottom-sheet-container{
+.mat-bottom-sheet-container {
   border-radius: 30px 30px 0px 0px !important;
   background-color: white !important;
   box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.2);
@@ -94,10 +79,10 @@ app-header-sign {
   }
 
   &:disabled {
-    background-color: #c0c0c0; 
-    color: #6c757d; 
+    background-color: #c0c0c0;
+    color: #6c757d;
     cursor: not-allowed;
-}
+  }
 }
 
 .btn-white {
@@ -161,41 +146,38 @@ app-header-sign {
   }
 }
 
+.mat-mdc-dialog-surface:has(.login-profil-dialog) {
+  background-color: white !important;
+  border-radius: 30px 0 30px 30px !important;
+}
 
+.mat-mdc-dialog-surface:has(.my-profil-dialog) {
+  background-color: white !important;
+}
 
+*::-webkit-scrollbar {
+  width: 8px;
+  max-height: 50px;
+  background: #fffcf3;
+  border-radius: 4px;
+}
 
+*::-webkit-scrollbar-track {
+  margin: 25px 0;
+  background: #adb0d9;
+  border-radius: 4px;
+}
 
-//@media(min-width: 600px) {
-  *::-webkit-scrollbar {
-    width: 8px;
-    /* Breite des Scrollbalkens */
-    max-height: 50px;
-    background: #fffcf3;
-    border-radius: 4px;
-  }
-  
-  *::-webkit-scrollbar-track {
-    margin: 25px 0;
-    background: #adb0d9;
-    /* Hintergrundfarbe des Scrollbalkens */
-    border-radius: 4px;
-  }
-  
-  *::-webkit-scrollbar-thumb {
-    cursor: pointer;
-    min-height: 30px;
-    //border: 1px solid black;
-    background: #797ef3;
-    /* Farbe des Griffs des Scrollbalkens */
-    border-radius: 4px;
-    /* Radius des Griffs des Scrollbalkens */
-  }
-  
-  *::-webkit-scrollbar-thumb:hover {
-    background: #444df2;
-    /* Farbe des Griffs des Scrollbalkens bei Hover */
-  }
-//}
+*::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  min-height: 30px;
+  background: #797ef3;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #444df2;
+}
 
 
 /* nunito-200 - latin */
@@ -373,13 +355,3 @@ app-header-sign {
   src: url('../public/fonts/nunito-v26-latin-900italic.woff2') format('woff2');
   /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
-
-.mat-mdc-dialog-surface:has(.login-profil-dialog){
-  background-color: white !important;
-  border-radius: 30px 0 30px 30px !important;
-}
-
-.mat-mdc-dialog-surface:has(.my-profil-dialog) {
-  background-color: white !important;
-}
- 

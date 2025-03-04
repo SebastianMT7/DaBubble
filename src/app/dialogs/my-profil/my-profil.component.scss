@@ -56,8 +56,10 @@ h2{
 .email{
     width: 100%;
   @include dFlex($jc: flex-start, $ai: flex-start, $fd: row, $gap: 20px);
+
   div{
     @include dFlex($jc: center, $ai: center, $fd: column, $gap: 8px);
+
     p{
         margin:0;
     }
@@ -72,6 +74,7 @@ h2{
     color:#535AF1;
     cursor: pointer;
     font-weight: 600;
+    
     &:hover{
         font-weight: 800;
     }

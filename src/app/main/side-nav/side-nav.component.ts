@@ -56,16 +56,14 @@ export class SideNavComponent {
     public dialog: MatDialog,
     public breakpointObserver: BreakpointObserverService,
     public searchbarService: SearchbarService
-  ) {
-    
-   }
+  ) { }
 
   /**
-   * Schaltet das Menü ein/aus, je nach Bildschirmgröße und Thread-Zustand.
+   * Toggles the menu based on screen size and thread state.
    */
-  toggleMenu() {
+  toggleMenu(): void {
     if (this.uiService.showThread && this.breakpointObserver.isMedium) {
-      this.uiService.closeThread()
+      this.uiService.closeThread();
       if (!this.uiService.showSidenav()) {
         this.uiService.toggleSidenav();
       }
@@ -73,13 +71,12 @@ export class SideNavComponent {
       this.menuVisible = !this.menuVisible;
       this.uiService.toggleSidenav();
     }
-
   }
 
   /**
-   * Öffnet eine neue Nachricht und schließt ggf. das Menü bei kleinen Bildschirmen.
+   * Opens a new message and closes the menu on small screens.
    */
-  openNewMessage() {
+  openNewMessage(): void {
     this.uiService.changeContent('newMessage');
     if (this.breakpointObserver.isXSmallOrSmall) {
       this.toggleMenu();
@@ -87,90 +84,86 @@ export class SideNavComponent {
   }
 
   /**
-   * Ändert das Bild des Pfeils und des Arbeitsbereichs in die aktive Version.
+   * Changes the arrow and workspace icons to their active versions.
    */
-  changeImg() {
+  changeImg(): void {
     this.arrowImg = 'img/icons/arrow_drop_down-blue.png';
     this.workspaceImg = 'img/icons/workspaces-blue.png';
-
   }
 
   /**
-   * Setzt die Bilder des Pfeils und des Arbeitsbereichs auf die Standardversion zurück.
+   * Resets the arrow and workspace icons to their default versions.
    */
-  resetImg() {
+  resetImg(): void {
     this.arrowImg = 'img/icons/arrow_drop_down.png';
     this.workspaceImg = 'img/icons/workspaces.png';
   }
 
   /**
-   * Ändert das Bild des Kanalsymbols in die aktive Version.
+   * Changes the channel icon to its active version.
    */
-  changeImgChannel() {
+  changeImgChannel(): void {
     this.addImg = "img/icons/add_circle-blue.png";
-
   }
 
   /**
-   * Setzt das Bild des Kanalsymbols auf die Standardversion zurück.
+   * Resets the channel icon to its default version.
    */
-  resetImgChannel() {
+  resetImgChannel(): void {
     this.addImg = "img/icons/add_circle.png";
   }
 
   /**
-   * Ändert das Bild des Nachrichten-Pfeils und des Profilsymbols in die aktive Version.
+   * Changes the message arrow and profile icons to their active versions.
    */
-  changeImgMessage() {
+  changeImgMessage(): void {
     this.arrowImg = 'img/icons/arrow_drop_down-blue.png';
     this.accountImg = "img/icons/account_circle-blue.png";
-
   }
 
   /**
-   * Setzt das Bild des Nachrichten-Pfeils und des Profilsymbols auf die Standardversion zurück.
+   * Resets the message arrow and profile icons to their default versions.
    */
-  resetImgMessage() {
+  resetImgMessage(): void {
     this.arrowImg = 'img/icons/arrow_drop_down.png';
     this.accountImg = "img/icons/account_circle.png";
   }
 
   /**
-   * Ändert das Bild des Menüsymbols in die aktive Version.
+   * Changes the menu icon to its active version.
    */
-  changeImgMenu() {
+  changeImgMenu(): void {
     this.menuImg = "img/icons/hide-navigation-blue.png";
   }
 
   /**
-   * Setzt das Bild des Menüsymbols auf die Standardversion zurück.
+   * Resets the menu icon to its default version.
    */
-  resetImgMenu() {
+  resetImgMenu(): void {
     this.menuImg = "img/icons/Hide-navigation.png";
-
   }
 
   /**
-   * Schaltet die Anzeige von Benutzern ein/aus.
+   * Toggles the visibility of users.
    */
-  toggleUser() {
+  toggleUser(): void {
     this.hideUser = !this.hideUser;
   }
 
   /**
-   * Schaltet die Anzeige von Kanälen ein/aus.
+   * Toggles the visibility of channels.
    */
-  toggleChannel() {
+  toggleChannel(): void {
     this.hideChannel = !this.hideChannel;
   }
 
   /**
-   * Startet eine Unterhaltung mit einem Benutzer und scrollt zur letzten Nachricht.
+   * Starts a conversation with a user and scrolls to the last message.
    * 
-   * @param {User} obj - Der Benutzer, mit dem die Unterhaltung gestartet werden soll.
-   * @param {Message} [msg] - Die Nachricht, zu der gescrollt werden soll (optional).
+   * @param {User} obj - The user to start a conversation with.
+   * @param {Message} [msg] - The message to scroll to (optional).
    */
-  startConversation(obj: User, msg?: Message) {
+  startConversation(obj: User, msg?: Message): void {
     this.conService.startConversation(obj);
 
     if (this.breakpointObserver.isXSmallOrSmall) {
@@ -184,13 +177,13 @@ export class SideNavComponent {
   }
 
   /**
-   * Öffnet einen Kanal-Chat und scrollt ggf. zu einer bestimmten Nachricht.
+   * Opens a channel chat and scrolls to a specific message, if provided.
    * 
-   * @param {any} obj - Der Kanal, der geöffnet werden soll.
-   * @param {Message} [msg] - Die Nachricht, zu der gescrollt werden soll (optional).
+   * @param {any} obj - The channel to open.
+   * @param {Message} [msg] - The message to scroll to (optional).
    */
-  openChannel(obj: any, msg?: Message) {
-    this.channelService.showChannelChat(obj)
+  openChannel(obj: any, msg?: Message): void {
+    this.channelService.showChannelChat(obj);
     if (this.breakpointObserver.isXSmallOrSmall) {
       this.toggleMenu();
     }
@@ -201,12 +194,9 @@ export class SideNavComponent {
     }
   }
 
-
-  // showUserChat(user: any) {
-  //   this.userDataService.setUser(user);
-  //   this.uiService.changeContent('directMessage');
-  // }
-
+  /**
+    * Opens a dialog to add a new channel.
+    */
   openDialogChannel(): void {
     const dialogRef = this.dialog.open(AddChannelComponent, {
       width: '100%',
@@ -217,11 +207,11 @@ export class SideNavComponent {
   }
 
   /**
-   * Öffnet die Suche und springt zu einer bestimmten Nachricht in einer Konversation oder einem Kanal.
-   * 
-   * @param {Conversation | Channel} conversation - Die Konversation oder der Kanal.
-   * @param {Message} msg - Die Nachricht, zu der gescrollt werden soll.
-   * @param {string} [chaId] - Die Kanal-ID (optional).
+   * Opens the search and jumps to a specific message in a conversation or channel.
+   *
+   * @param {Conversation | Channel} conversation - The conversation or channel.
+   * @param {Message} msg - The message to scroll to.
+   * @param {string} [chaId] - The channel ID (optional).
    */
   openSearchMsg(conversation: Conversation | Channel, msg: Message, chaId?: string) {
     let currentUid = this.userDataService.currentUserSig()?.uid as string;
@@ -242,10 +232,10 @@ export class SideNavComponent {
   }
 
   /**
-   * Öffnet einen Thread und scrollt zur angegebenen Nachricht.
-   * 
-   * @param {Thread} data - Die Thread-Daten.
-   * @param {Message} msg - Die Nachricht, zu der gescrollt werden soll.
+   * Opens a thread and scrolls to the specified message.
+   *
+   * @param {Thread} data - The thread data.
+   * @param {Message} msg - The message to scroll to.
    */
   openThreadMsg(data: Thread, msg: Message) {
     this.uiService.currentThread = data;
@@ -259,9 +249,9 @@ export class SideNavComponent {
   }
 
   /**
-   * Scrollt zur letzten Nachricht in einer Unterhaltung oder einem Kanal.
-   * 
-   * @param {User | Channel} obj - Der Benutzer oder der Kanal.
+   * Scrolls to the last message in a conversation or channel.
+   *
+   * @param {User | Channel} obj - The user or channel.
    */
   scrollToLastMessage(obj: User | Channel) {
     let conv: Channel | Conversation;
@@ -286,9 +276,9 @@ export class SideNavComponent {
   }
 
   /**
-   * Scrollt zu einer Nachricht im übergeordneten Chat.
-   * 
-   * @param {Message} msg - Die Nachricht, zu der gescrollt werden soll.
+   * Scrolls to a message in the parent chat.
+   *
+   * @param {Message} msg - The message to scroll to.
    */
   scrollInParentChat(msg: Message) {
     const targetParentId = `${msg.parent?.msgId}`;
@@ -296,21 +286,21 @@ export class SideNavComponent {
   }
 
   /**
-   * Scrollt zu einer Nachricht im aktuellen Chat.
-   * 
-   * @param {Message} msg - Die Nachricht, zu der gescrollt werden soll.
+   * Scrolls to a message in the current chat.
+   *
+   * @param {Message} msg - The message to scroll to.
    */
   scrollInChat(msg: Message) {
     const targetMessageId = `${msg.msgId}`;
     this.uiService.triggerScrollTo(targetMessageId);
   }
 
-/**
- * Öffnet einen Kanal-Thread und scrollt zur angegebenen Nachricht.
- * 
- * @param {Thread} data - Der Thread, der geöffnet werden soll.
- * @param {Message} msg - Die Nachricht, zu der gescrollt werden soll.
- */
+  /**
+   * Opens a channel thread and scrolls to the specified message.
+   *
+   * @param {Thread} data - The thread to open.
+   * @param {Message} msg - The message to scroll to.
+   */
   openChannelThread(data: Thread, msg: Message) {
     let channel = this.findChannel(data)
     this.openChannel(channel, msg)
@@ -320,12 +310,12 @@ export class SideNavComponent {
     }
   }
 
-/**
- * Öffnet eine Konversations-Thread und scrollt zur angegebenen Nachricht.
- * 
- * @param {Thread} data - Der Thread, der geöffnet werden soll.
- * @param {Message} msg - Die Nachricht, zu der gescrollt werden soll.
- */
+  /**
+   * Opens a conversation thread and scrolls to the specified message.
+   *
+   * @param {Thread} data - The thread to open.
+   * @param {Message} msg - The message to scroll to.
+   */
   openConvThread(data: Thread, msg: Message) {
     let currentUid = this.userDataService.currentUserSig()?.uid as string;
     let foundId: string | null = null;
@@ -342,34 +332,34 @@ export class SideNavComponent {
     }
   }
 
-/**
- * Findet einen Kanal basierend auf einem Thread.
- * 
- * @param {Thread} thread - Der Thread, aus dem der Kanal ermittelt werden soll.
- * @returns {Channel} - Der gefundene Kanal.
- */
+  /**
+   * Finds a channel based on a thread.
+   *
+   * @param {Thread} thread - The thread from which to determine the channel.
+   * @returns {Channel} - The found channel.
+   */
   findChannel(thread: Thread) {
     return this.firebaseService.allChannels.find(channel => channel.chaId === thread.convId) as Channel;
   }
 
-/**
- * Findet eine Konversation basierend auf einem Thread.
- * 
- * @param {Thread} thread - Der Thread, aus dem die Konversation ermittelt werden soll.
- * @returns {Conversation} - Die gefundene Konversation.
- */
+  /**
+   * Finds a conversation based on a thread.
+   *
+   * @param {Thread} thread - The thread from which to determine the conversation.
+   * @returns {Conversation} - The found conversation.
+   */
   findConversation(thread: Thread) {
     return this.firebaseService.allConversations.find(conv => conv.conId === thread.convId) as Conversation;
   }
 
-/**
- * Sucht nach der Benutzer-ID, die nicht mit der aktuellen Benutzer-ID übereinstimmt.
- * 
- * @param {Conversation | Channel} conversation - Die Konversation oder der Kanal.
- * @param {string} currentUid - Die aktuelle Benutzer-ID.
- * @param {string | null} foundId - Die gefundene Benutzer-ID (initial null).
- * @returns {User | Channel | undefined} - Der gefundene Benutzer oder Kanal.
- */
+  /**
+   * Searches for a user ID that does not match the current user ID.
+   *
+   * @param {Conversation | Channel} conversation - The conversation or channel.
+   * @param {string} currentUid - The current user ID.
+   * @param {string | null} foundId - The found user ID (initially null).
+   * @returns {User | Channel | undefined} - The found user or channel.
+   */
   searchforUserId(conversation: Conversation | Channel, currentUid: string, foundId: string | null) {
     if (conversation) {
       if ('user' in conversation) {
@@ -386,4 +376,5 @@ export class SideNavComponent {
     }
     return;
   }
+
 }

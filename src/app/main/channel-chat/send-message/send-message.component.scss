@@ -63,46 +63,6 @@ section {
     bottom: 160px;
 }
 
-// .scrollDiv {
-//     background-color: #444df2;
-//     border-radius: 20px;
-//     position: absolute;
-//     bottom: 160px;
-//     left: 0;
-//     width: 200px;
-//     padding: 15px 0;
-//     box-shadow: -8px 6px 16px #00000054;
-// }
-
-// .userList {
-//     @include dFlex($fd: column, $jc: flex-start, $gap: 5px);
-//     height: 120px;
-//     width: 200px;
-//     color: white;
-//     background-color: #444df2;
-//     font-size: 18px;
-//     box-sizing: border-box;
-//     overflow-y: auto;
-
-//     span {
-//         text-align: center;
-//         cursor: pointer;
-
-//         &:hover {
-//             font-weight: 700;
-
-//         }
-//     }
-// }
-
-// ::-webkit-scrollbar {
-//     background: #444df2;
-// }
-
-// ::-webkit-scrollbar-track {
-//     margin: 15px 0;
-// }
-
 .sendIcon {
     cursor: pointer;
 
@@ -119,10 +79,6 @@ section {
     pointer-events: none;
     opacity: 0.5;
 }
-
-
-
-
 
 .hideUserDialog {
     display: none !important;
@@ -180,7 +136,6 @@ section {
         background: #ECEEFE;
         border-radius: 30px;
         color: #535AF1;
-
     }
 }
 

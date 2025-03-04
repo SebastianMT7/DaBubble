@@ -14,9 +14,8 @@
             <img class="avatar-image" src="{{this.currentAvatar}}" (click)="showAvatar()" alt="">
         </div>
     </div>
-    <div> <!--form-->
+    <div>
         <div class="form-group" [ngClass]="{'d-none': isEditingAvatar}">
-
             <div class="profil-name" *ngIf="!showPasswordInput">
                 <div class="input">
                     <img src="img/icons/account_circle.png" alt="">

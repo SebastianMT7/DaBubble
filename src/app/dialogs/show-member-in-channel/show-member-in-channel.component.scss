@@ -41,6 +41,7 @@ app-single-member {
 .add-member {
     @include dFlex($jc: unset, $ai: center, $fd: row, $gap: 0);
     padding: 4px 20px;
+    
   &:hover {
     background-color: $bgHover;
      color:#535AF1 ;

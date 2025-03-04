@@ -61,6 +61,9 @@ export class EditProfileComponent {
     }, 100);
   }
 
+  /**
+   * sets the 'showPasswordInput' variable to true
+   */
   verifyPassword() {
     this.showPasswordInput = true;
   }
@@ -127,13 +130,19 @@ export class EditProfileComponent {
     };
   }
 
+  /**
+   * sets the 'passwordWrong' variable to false
+   * closes the edit profile dialog
+   */
   closeProfil(): void {
     this.authService.passwordWrong = false;
     this.dialogRef.close();
   }
 
+  /**
+   * sets the 'isEditingAvatar' variable to true if the input isn't empty otherwise to false
+   */
   checkUsername() {
-    // console.log(this.inputName.trim().length)
     if (this.inputName.trim().length > 0) {
       this.validUsername = true;
     } else {
@@ -141,10 +150,18 @@ export class EditProfileComponent {
     }
   }
 
+  /**
+   * sets the 'isEditingAvatar' variable to true
+   */
   showAvatar() {
     this.isEditingAvatar = true;
   }
 
+  /**
+   * sets the 'currentAvatar' variable to the selected avatar
+   * sets the 'isEditingAvatar' variable to true
+   * @param avatar the selected avatar
+   */
   selectAvatar(avatar: string) {
     this.currentAvatar = avatar;
     this.isEditingAvatar = false;

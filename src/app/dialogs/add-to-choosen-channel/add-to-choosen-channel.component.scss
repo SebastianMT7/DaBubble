@@ -90,18 +90,16 @@ h2 {
   top: 45px;
   z-index: 9999; 
   height: 150px;
-  overflow-y: scroll;
- 
+  overflow-y: scroll; 
   box-sizing: border-box;
 }
 
 .single-user {
   display: flex;
   align-items: center;
-  gap: 10px; 
-  
- 
+  gap: 10px;  
 }
+
 .single-user-hover {
   padding: 4px 20px;
   display: flex;
@@ -112,39 +110,39 @@ h2 {
       cursor: pointer;
       background: #ECEEFE;
       border-radius: 30px;
-      color: #535AF1;
-      
+      color: #535AF1;      
   }
-
 }
 
 .hideUserDialog {
   display: none;
 }
+
 .showUserDialog {
   display: flex !important;
-  flex-direction: column;
-  
+  flex-direction: column;  
 }
 
 .filtered-users {
   margin-top: 10px;
+
   .user-item {
     display: flex;
     align-items: center;
     padding: 5px;
     cursor: pointer;
+
     &:hover {
       background-color: #e6e6ff;
     }
+
     .avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       margin-right: 8px;
     }
-  }
- 
+  } 
 }
 
 .avatar img {
@@ -168,12 +166,14 @@ h2 {
   color: #333;
   gap: 4px;
   margin-top: 12px;
+
   .avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 4px;
   }
+
   button {
     background: none;
     border: none;
@@ -183,6 +183,7 @@ h2 {
     margin-left: 4px;
   }
 }
+
 .user-container {
   max-height: 100px;
   overflow-y: auto;

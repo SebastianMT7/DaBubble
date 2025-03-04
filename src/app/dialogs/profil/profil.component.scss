@@ -3,8 +3,8 @@
 * {
   font-family: "Nunito";
 }
- 
-.profil-dialog{
+
+.profil-dialog {
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -29,7 +29,7 @@ h2 {
   border-radius: 200px;
 }
 
-.prifile-img{
+.prifile-img {
   width: 200px;
   margin: 0px 40px;
 }
@@ -44,6 +44,7 @@ h2 {
   margin: 20px 40px;
   gap: 15px;
   align-items: center;
+
   >img {
     width: 16px;
     height: 16px;
@@ -72,16 +73,18 @@ h2 {
   position: relative;
 
   &:hover {
-      background-color: $bgHover;
-      border-radius: 50%;
+    background-color: $bgHover;
+    border-radius: 50%;
   }
 }
 
 .email {
   margin: 20px 40px;
   @include dFlex($jc: unset, $ai: flex-start, $fd: row, $gap: 20px);
+
   div {
     @include dFlex($jc: none, $ai: none, $fd: column, $gap: 0);
+
     p {
       margin: 0;
     }
@@ -98,12 +101,12 @@ button {
 
 @media (max-width: 500px) {
 
-  .profile-header{
+  .profile-header {
     width: 100%;
   }
-     
-  .profil-dialog{
-    @include dFlex($jc:unset, $ai: center, $fd: column, $gap: 0px);
+
+  .profil-dialog {
+    @include dFlex($jc: unset, $ai: center, $fd: column, $gap: 0px);
     max-width: 800px;
     width: 100vw;
     padding: 20px;
@@ -114,21 +117,20 @@ button {
     max-width: 100vw;
   }
 
-  .avatar{
+  .avatar {
     margin: 0;
   }
 
-  .online-status{
+  .online-status {
     margin: 0px 40px 20px 40px;
   }
 
-  .email{
+  .email {
     margin: 0px 40px 20px 40px;
-}
+  }
 
-button {
-  margin: 0px;
+  button {
+    margin: 0px;
+  }
+  
 }
-}
-
-
