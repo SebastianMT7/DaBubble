@@ -35,16 +35,15 @@ export class FirebaseService {
 
   constructor() { }
 
-  /**
-   * Lädt alle relevanten Benutzerdaten asynchron und zeigt währenddessen eine Ladeanzeige an.
-   * Die Daten werden parallel geladen und anschließend verarbeitet.
-   * @param currentUid Die eindeutige Benutzer-ID des aktuell angemeldeten Benutzers.
+/**
+   * Loads all relevant user data asynchronously and displays a loading indicator while doing so.
+   * The data is loaded in parallel and then processed.
+   * @param currentUid The unique user ID of the currently logged in user.
    */
   async initializeData(currentUid: string) {
     this.isLoading = true;
 
     try {
-      // Daten parallel laden
       await Promise.all([
         this.getAllUsers(currentUid),
         this.getAllConversations(),
@@ -59,10 +58,10 @@ export class FirebaseService {
     }
   }
 
-  /**
-   * Verschiebt den Benutzer mit der angegebenen UID an den Anfang der Benutzerliste.
-   * Wird verwendet, um den aktuell angemeldeten Benutzer hervorzuheben.
-   * @param currentUid Die eindeutige Benutzer-ID des aktuellen Benutzers.
+/**
+   * Moves the user with the specified UID to the top of the user list.
+   * Used to highlight the currently logged in user.
+   * @param currentUid The unique user ID of the current user.
    */
   moveUserToFront(currentUid: string): void {
     const index = this.allUsers.findIndex(user => user.uid === currentUid);
@@ -73,9 +72,9 @@ export class FirebaseService {
     }
   }
 
-  /**
-   * Sortiert die Liste aller Benutzer basierend auf ihrem Status.
-   * Online-Benutzer werden an den Anfang der Liste verschoben.
+/**
+   * Sorts the list of all users based on their status.
+   * Online users are moved to the top of the list.
    */
   sortByStatus() {
     this.allUsers.sort((a, b) => {
@@ -89,9 +88,9 @@ export class FirebaseService {
     });
   }
 
-  /**
-   * Entfernt alle aktiven Listener und leert die Liste der Listener.
-   * Setzt das Flag für aktive Channel-Listener zurück.
+/**
+   * Removes all active listeners and clears the list of listeners.
+   * Resets the active channel listener flag.
    */
   unsubscribeAll() {
     this.unsubscribeListeners.forEach((unsub, index) => {
@@ -104,10 +103,10 @@ export class FirebaseService {
     this.isUserChannelsListenerActive = false;
   }
 
-  /**
-   * Lädt alle Channels, denen der Benutzer angehört.
-   * Verhindert mehrfaches Laden, wenn bereits ein Listener aktiv ist.
-   * @param userUid Die eindeutige Benutzer-ID.
+/**
+   * Loads all channels the user belongs to.
+   * Prevents multiple loading if a listener is already active.
+   * @param userUid The unique user ID.
    */
   loadUserChannels(userUid: string) {
     if (!userUid) {
@@ -120,10 +119,10 @@ export class FirebaseService {
     this.loadAfterChecking(userUid);
   }
 
-  /**
-   * Startet einen Snapshot-Listener, um Benutzerkanäle in Echtzeit zu aktualisieren.
-   * Lädt Channels, die den Benutzer enthalten, und speichert sie lokal.
-   * @param userUid Die eindeutige Benutzer-ID.
+/**
+   * Launches a snapshot listener to update user channels in real time.
+   * Loads channels containing the user and saves them locally.
+   * @param userUid The unique user ID.
    */
   loadAfterChecking(userUid: string) {
     const channelsRef = collection(this.firestore, 'channels');
@@ -140,18 +139,18 @@ export class FirebaseService {
     this.isUserChannelsListenerActive = true;
   }
 
-  /**
-   * Registriert einen Listener, um ihn später entfernen zu können.
-   * @param unsubscribeFn Die Funktion, die den Listener entfernt.
+/**
+   * Registers a listener for later removal.
+   * @param unsubscribeFn The function that removes the listener.
    */
   public registerListener(unsubscribeFn: () => void): void {
     this.unsubscribeListeners.push(unsubscribeFn);
   }
 
-  /**
-   * Lädt alle Benutzer aus der Firestore-Datenbank und speichert sie in einer lokalen Liste.
-   * Sortiert die Benutzer nach Status und verschiebt den aktuellen Benutzer an den Anfang.
-   * @param currentUid Die eindeutige Benutzer-ID des aktuellen Benutzers.
+/**
+   * Loads all users from the Firestore database and saves them to a local list.
+   * Sorts users by status and moves the current user to the top.
+   * @param currentUid The unique user ID of the current user.
    */
   async getAllUsers(currentUid: string) {
     const q = query(collection(this.firestore, "users"));
@@ -170,9 +169,9 @@ export class FirebaseService {
     this.registerListener(unsubscribe);
   }
 
-  /**
-   * Lädt alle Threads aus der Firestore-Datenbank und speichert sie lokal.
-   * Aktualisiert die Liste in Echtzeit mithilfe eines Snapshot-Listeners.
+/**
+   * Loads all threads from the Firestore database and saves them locally.
+   * Updates the list in real time using a snapshot listener.
    */
   async loadAllThreads() {
     const q = query(collection(this.firestore, "threads"));
@@ -188,9 +187,9 @@ export class FirebaseService {
     this.registerListener(unsubscribe);
   }
 
-  /**
-   * Hört auf Änderungen an einem bestimmten Thread und aktualisiert die aktuelle Unterhaltung in Echtzeit.
-   * @param threadId Die eindeutige ID des Threads.
+/**
+   * Listen for changes to a specific thread and update the current conversation in real time.
+   * @param threadId The unique ID of the thread.
    */
   listenToCurrentThreadChanges(threadId: any) {
     const conversationRef = doc(this.firestore, `conversations/${threadId}`);
@@ -203,9 +202,9 @@ export class FirebaseService {
     this.registerListener(unsubscribe);
   }
 
-  /**
-   * Lädt alle Unterhaltungen aus der Firestore-Datenbank und speichert sie lokal.
-   * Aktualisiert die Liste in Echtzeit mithilfe eines Snapshot-Listeners.
+/**
+   * Loads all conversations from the Firestore database and saves them locally.
+   * Updates the list in real time using a snapshot listener.
    */
   async getAllConversations() {
     const q = query(collection(this.firestore, "conversations"));
@@ -220,10 +219,10 @@ export class FirebaseService {
     this.registerListener(unsubscribe);
   }
 
-  /**
-   * Erstellt ein strukturiertes Conversation-Objekt aus den Rohdaten einer Firestore-Datenbankabfrage.
-   * @param conversation Die Rohdaten der Unterhaltung.
-   * @returns Ein `Conversation`-Objekt.
+/**
+   * Creates a structured conversation object from the raw data of a Firestore database query.
+   * @param conversation The raw data of the conversation.
+   * @returns A `Conversation` object.
    */
   setConversationObject(conversation: any): Conversation {
     return {
@@ -235,10 +234,10 @@ export class FirebaseService {
     };
   }
 
-  /**
-   * Weist allen Benutzern die angegebene Channel-ID zu und speichert die Daten in der Firestore-Datenbank.
-   * @param chaId Die ID des Channels.
-   * @param currentChannel Die Daten des aktuellen Channels.
+/**
+   * Assigns the specified channel ID to all users and stores the data in the Firestore database.
+   * @param chaId The ID of the channel.
+   * @param currentChannel The data of the current channel.
    */
   async assignUsersToChannel(chaId: string, currentChannel: any) {
     try {
@@ -249,20 +248,20 @@ export class FirebaseService {
     }
   }
 
-  /**
-   * Fügt alle Benutzer zu einem bestimmten Channel hinzu.
-   * Ruft die Funktion `assignUsersToChannel` auf.
-   * @param chaId Die ID des Channels.
-   * @param currentChannel Die Daten des aktuellen Channels.
+/**
+   * Adds all users to a specific channel.
+   * Calls the `assignUsersToChannel` function.
+   * @param chaId The ID of the channel.
+   * @param currentChannel The data of the current channel.
    */
   async addAllUsersToChannel(chaId: string, currentChannel: any) {
     await this.assignUsersToChannel(chaId, currentChannel)
 
   }
 
-  /**
-   * Fügt einen neuen Benutzer in die Firestore-Datenbank ein.
-   * @param user Die Benutzerdaten, die gespeichert werden sollen.
+/**
+   * Adds a new user to the Firestore database.
+   * @param user The user data to be saved.
    */
   async addUser(user: any) {
     const userId = user.uid;
@@ -273,8 +272,8 @@ export class FirebaseService {
   }
 
   /**
-   * 
-   * @param user 
+   * addet the new registered user to the 'Welcome' Channel
+   * @param user the new registered user
    */
   async addToWelcomeChannel(user:any){
     try {
@@ -285,10 +284,10 @@ export class FirebaseService {
     }
   }
 
-  /**
-   * Aktualisiert den Status eines Benutzers in der Firestore-Datenbank.
-   * @param currentUser Die aktuellen Benutzerdaten.
-   * @param status Der neue Status, z. B. "online" oder "offline".
+/**
+   * Updates a user's status in the Firestore database.
+   * @param currentUser The current user data.
+   * @param status The new status, e.g. B. “online” or “offline”.
    */
   async setUserStatus(currentUser: UserCredential | null, status: string) {
     if (!currentUser || !currentUser.user) {
@@ -302,10 +301,10 @@ export class FirebaseService {
     }
   }
 
-  /**
-   * Fügt die ausgewählten Benutzer zu einem Channel hinzu.
-   * Aktualisiert die Firestore-Datenbank mit den neuen Benutzerinformationen.
-   * @param ChannelId Die ID des Channels.
+/**
+   * Adds the selected users to a channel.
+   * Updates the Firestore database with the new user information.
+   * @param ChannelId The ID of the channel.
    */
   async addUsersToChannel(ChannelId: string) {
     const userRef = doc(this.firestore, "channels", ChannelId);
@@ -314,11 +313,11 @@ export class FirebaseService {
     });
   }
 
-  /**
-   * Ruft die Daten eines bestimmten Benutzers anhand der UID ab.
-   * Verwendet einen Snapshot-Listener, um die Daten abzurufen.
-   * @param uid Die eindeutige Benutzer-ID.
-   * @returns Eine Promise, die die Benutzerdaten oder einen Fehler zurückgibt.
+/**
+   * Retrieves a specific user's data by UID.
+   * Uses a snapshot listener to retrieve the data.
+   * @param uid The unique user ID.
+   * @returns A promise that returns the user data or an error.
    */
   getCurrentUser(uid: string): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -333,10 +332,10 @@ export class FirebaseService {
     });
   }
 
-  /**
-   * Hört auf Änderungen der Benutzerdaten in der Firestore-Datenbank.
-   * Aktualisiert die lokalen Benutzerdaten bei jeder Änderung.
-   * @param id Die ID des Benutzers.
+/**
+   * Listens for user data changes in the Firestore database.
+   * Updates local user data with every change.
+   * @param id The user's ID.
    */
   async subscribeUserById(id: any) {
     const unsubscribe = onSnapshot(this.getUserDocRef(id), (user) => {
@@ -345,9 +344,9 @@ export class FirebaseService {
     this.registerListener(unsubscribe);
   }
 
-  /**
-   * Aktualisiert die Daten eines Benutzers in der Firestore-Datenbank.
-   * @param user Die neuen Benutzerdaten.
+/**
+   * Updates a user's information in the Firestore database.
+   * @param user The new user data.
    */
   async updateUser(user: any) {
     if (user.uid) {
@@ -357,9 +356,9 @@ export class FirebaseService {
     this.getAllUsers(user.uid)
   }
 
-    /**
-   * Aktualisiert die Daten eines Benutzers in der Firestore-Datenbank.
-   * @param user Die neuen Benutzerdaten.
+/**
+   * Updates a user's information in the Firestore database.
+   * @param user The new user data.
    */
     async updateUserData(user: any) {
       if (user.uid) {
@@ -368,27 +367,27 @@ export class FirebaseService {
       }
     }
 
-  /**
-   * Schaltet den Zustand eines Channels um (offen/geschlossen).
+/**
+   * Toggles the state of a channel (open/closed).
    */
   toggleChannel() {
     this.isClosed = !this.isClosed;
   }
 
-  /**
-   * Gibt die Dokumentreferenz für einen Benutzer basierend auf der Dokument-ID zurück.
-   * @param docId Die ID des Benutzerdokuments.
-   * @returns Die Dokumentreferenz.
+/**
+   * Returns the document reference for a user based on document ID.
+   * @param docId The ID of the user document.
+   * @returns The document reference.
    */
   getUserDocRef(docId: any) {
     return doc(collection(this.firestore, 'users'), docId);
   }
 
-  /**
-   * Erstellt ein strukturiertes JSON-Objekt für einen Benutzer.
-   * @param object Die Rohdaten des Benutzers.
-   * @param id Die eindeutige Benutzer-ID.
-   * @returns Ein JSON-Objekt mit den Benutzerdaten.
+/**
+   * Creates a structured JSON object for a user.
+   * @param object The user's raw data.
+   * @param id The unique user ID.
+   * @returns A JSON object containing the user data.
    */
   setUserJson(object: any, id: string): any {
     return {
@@ -402,11 +401,11 @@ export class FirebaseService {
     }
   }
 
-  /**
-   * Konvertiert ein Benutzerobjekt in ein sauberes JSON-Format.
-   * Entfernt unnötige Felder und bereitet die Daten für die Speicherung vor.
-   * @param object Das Benutzerobjekt.
-   * @returns Ein JSON-Objekt mit den bereinigten Benutzerdaten.
+/**
+   * Converts a user object to a clean JSON format.
+   * Removes unnecessary fields and prepares data for storage.
+   * @param object The user object.
+   * @returns A JSON object containing the cleaned user data.
    */
   getUserAsCleanJson(object: any): {} {
     return {
@@ -419,6 +418,7 @@ export class FirebaseService {
       role: object.role
     }
   }
+  
 }
 
 

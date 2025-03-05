@@ -305,5 +305,4 @@ export class ReactionService {
     reaction.counter = Object.keys(reaction.reactedUser).length;
   }
 
-
 }

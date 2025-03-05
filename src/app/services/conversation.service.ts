@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { doc, addDoc, setDoc, Firestore, collection, onSnapshot} from '@angular/fire/firestore';
+import { doc, addDoc, setDoc, Firestore, collection, onSnapshot } from '@angular/fire/firestore';
 import { User } from '../models/user.model';
 import { Conversation } from '../models/conversation.model';
 import { AuthService } from './../services/auth.service';

@@ -32,16 +32,16 @@ export class SearchbarService {
 
   constructor(private firebaseService: FirebaseService, private authService: AuthService) { }
 
-  /**
-   * Kombiniert Arrays von Firebase-Objekten in ein Array von Objekten mit Typen und Daten.
-   * Jedes Objekt enthält einen Typ (z.B. "user", "channel", "conversation") und die dazugehörigen Daten.
-   * 
-   * Die Arrays von `allUsers`, `allChannels`, `allConversations`, und `allThreads` werden durchlaufen und jedes Element wird in ein neues Objekt mit Typ und Daten umgewandelt.
-   */
+/**
+ * Combines arrays of Firebase objects into a single array of objects with types and data.
+ * Each object contains a type (e.g., "user", "channel", "conversation") and its corresponding data.
+ * 
+ * The arrays `allUsers`, `allChannels`, `allConversations`, and `allThreads` are iterated through, 
+ * and each element is transformed into a new object with a type and data property.
+ */
   combineArraysWithTypes() {
     this.allObjects = [];
 
-    // Umwandeln der Arrays und Pushen in das neue Array
     this.firebaseService.allUsers.forEach(user => {
       this.allObjects.push({ name: "user", data: user });
     });
@@ -63,18 +63,18 @@ export class SearchbarService {
   }
 
 
-  /**
-   * Überprüft, ob der ausgewählte Benutzer-Input leer ist, und setzt die Sichtbarkeit der Eingabemaske auf `true`, wenn keine Benutzer ausgewählt sind.
-   * Setzt außerdem den `searchName` auf eine leere Zeichenkette.
-   */
+/**
+ * Checks if the selected user input is empty and sets the visibility of the input mask to `true` if no users are selected.
+ * Also resets `searchName` to an empty string.
+ */
   emptyInput() {
     this.isInputEmpty = this.firebaseService.selectedUsers.length === 0;
     this.searchName = "";
   }
 
-  /**
-   * Setzt den `newMsgSearchName` auf eine leere Zeichenkette und leert die `filteredResults`.
-   */
+ /**
+ * Resets the `newMsgSearchName` to an empty string and clears the `filteredResults`.
+ */
   emptyMsgInput() {
     this.newMsgSearchName = "";
     this.searchNameSendMsg = "";
@@ -84,12 +84,13 @@ export class SearchbarService {
     this.filteredResultsSendMsgThread = [];
   }
 
-  /**
-   * Filtert die Benutzer und Kanäle basierend auf dem `searchName`. 
-   * Die Filterung erfolgt abhängig vom Namen (Benutzername für Benutzer, Titel/Beschreibung für Kanäle, Nachrichteninhalt für Konversationen und Threads).
-   * 
-   * @returns {Array} - Ein Array mit den gefilterten Objekten basierend auf dem Suchkriterium.
-   */
+/**
+ * Filters users and channels based on `searchName`.
+ * Filtering is done by username for users, title/description for channels, 
+ * and message content for conversations and threads.
+ * 
+ * @returns {Array} - An array of filtered objects based on the search criteria.
+ */
   get filteredUsers() {
     if (this.searchName.trim().length < 1) {
       return [];
@@ -128,13 +129,13 @@ export class SearchbarService {
     return results;
   }
 
-  /**
-   * Sucht nach Benutzern und Kanälen basierend auf der Eingabe im `newMsgSearchName`.
-   * Es werden Benutzer mit einem `@` und Kanäle mit einem `#` vor dem Suchbegriff gefiltert.
-   * Wenn keine speziellen Zeichen vorhanden sind, wird nach E-Mails gefiltert.
-   * 
-   * Der `filteredResults` Array wird basierend auf dem Suchbegriff aktualisiert.
-   */
+/**
+ * Searches for users and channels based on the `newMsgSearchName` input.
+ * Users are filtered using "@" and channels using "#".
+ * If no special character is present, it filters by email.
+ * 
+ * The `filteredResults` array is updated based on the search term.
+ */
   newMsgSearch() {
     if (this.newMsgSearchName.startsWith('@')) {
       const searchTerm = this.newMsgSearchName.slice(1).toLowerCase();
@@ -156,7 +157,13 @@ export class SearchbarService {
   }
 
 
-
+/**
+ * Searches for users and channels when sending a message.
+ * Users are filtered with "@" and channels with "#".
+ * Updates the correct filteredResults array depending on the input type.
+ * 
+ * @param {string | undefined} input - Specifies the type of input (e.g., "thread", "channel").
+ */
   searchSendMsg(input: string | undefined) {
     let userResults: User[] = [];
     let channelResults: Channel[] = [];
@@ -177,6 +184,12 @@ export class SearchbarService {
     }
   }
 
+/**
+ * Finds the correct search term based on the input type.
+ * 
+ * @param {string | undefined} input - Specifies the input type ("thread", "channel", etc.).
+ * @returns {string} - The processed search term.
+ */
   findRightInput(input: string | undefined) {
     let searchTerm = '';
     if (input == 'thread') {
@@ -188,6 +201,12 @@ export class SearchbarService {
     return searchTerm
   }
 
+  /**
+ * Filters user results based on the search term after the "@" symbol.
+ * 
+ * @param {string} searchTerm - The search term containing "@".
+ * @returns {User[]} - An array of filtered users.
+ */
   fillUserResults(searchTerm: string) {
     let userResults: User[] = [];
     const userTerm = this.searchForAt(searchTerm);
@@ -197,6 +216,12 @@ export class SearchbarService {
     return userResults
   }
 
+  /**
+ * Filters channel results based on the search term after the "#" symbol.
+ * 
+ * @param {string} searchTerm - The search term containing "#".
+ * @returns {Channel[]} - An array of filtered channels.
+ */
   fillChannelResults(searchTerm: string) {
     let channelResults: Channel[] = [];
     const channelTerm = this.searchForHashtag(searchTerm);
@@ -206,16 +231,35 @@ export class SearchbarService {
     return channelResults
   }
 
+/**
+ * Extracts the search term after the last "@" symbol.
+ * 
+ * @param {string} searchTerm - The full search string.
+ * @returns {string} - The extracted search term.
+ */
   searchForAt(searchTerm: string) {
     const atIndex = searchTerm.lastIndexOf('@');
     return atIndex !== -1 ? searchTerm.substring(atIndex + 1) : '';
   }
 
+  /**
+ * Extracts the search term after the last "#" symbol.
+ * 
+ * @param {string} searchTerm - The full search string.
+ * @returns {string} - The extracted search term.
+ */
   searchForHashtag(searchTerm: string) {
     const hashtagIndex = searchTerm.lastIndexOf('#');
     return hashtagIndex !== -1 ? searchTerm.substring(hashtagIndex + 1) : '';
   }
 
+  /**
+ * Fills the correct result array with filtered user and channel results.
+ * 
+ * @param {string | undefined} input - Specifies the input type ("thread", "channel", etc.).
+ * @param {User[]} userResults - Array of filtered users.
+ * @param {Channel[]} channelResults - Array of filtered channels.
+ */
   fillResultsInRightArray(input: string | undefined, userResults: User[], channelResults: Channel[]) {
     if (input == 'thread') {
       this.filteredResultsSendMsgThread = [...userResults, ...channelResults];
@@ -225,7 +269,4 @@ export class SearchbarService {
     }
   }
 
-  ngOnDestroy() {
-
-  }
 }

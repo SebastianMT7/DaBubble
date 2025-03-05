@@ -15,7 +15,7 @@ import { SearchbarService } from './searchbar.service';
 })
 export class ChannelService {
   currentChannel = new Channel();
-  newChannel: Channel = new Channel(); 
+  newChannel: Channel = new Channel();
   uiService = inject(InterfaceService);
   conService = inject(ConversationService);
   allChannels: Channel[] = [];
@@ -33,8 +33,6 @@ export class ChannelService {
     this.getAllChannels();
   }
 
-
-
   /**
  * Listens to real-time updates for a specific channel by its ID.
  * Updates the current channel subject with new data when changes occur.
@@ -43,7 +41,6 @@ export class ChannelService {
  */
   listenToChannel(chaId: string) {
     const channelRef = doc(this.firestore, `channels/${chaId}`);
-
     const unsubscribe = onSnapshot(channelRef, (docSnapshot) => {
       if (docSnapshot.exists()) {
         const updatedChannel = docSnapshot.data() as Channel;
@@ -147,7 +144,6 @@ export class ChannelService {
     const channelData = newChannel.getJSON();
     const channelRef = await addDoc(collection(this.firestore, "channels"), channelData);
     newChannel.chaId = channelRef.id;
-     
 
     if (isSelected) {
       this.firebaseService.selectedUsers = newChannel.users;
@@ -170,7 +166,7 @@ export class ChannelService {
       this.allChannels = [];
       querySnapshot.forEach((doc) => {
         this.convertData(doc.data(), doc.id);
-        
+
       });
     });
     this.firebaseService.registerListener(unsubscribe);
@@ -192,7 +188,6 @@ export class ChannelService {
     newChannel.messages = data['messages'];
     newChannel.comments = data['comments'];
     newChannel.reactions = data['reactions'];
-
     this.allChannels.push(newChannel);
   }
 
@@ -242,4 +237,5 @@ export class ChannelService {
       comments: channel.comments,
     };
   }
+  
 }

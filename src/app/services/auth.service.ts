@@ -64,33 +64,33 @@ export class AuthService {
   ) { }
 
   /**
-   * Speichert die Registrierungsdaten des Benutzers vorübergehend in einer Instanzvariablen.
-   * Diese Daten können verwendet werden, um den Benutzer nach der Registrierung weiter zu verarbeiten.
-   * @param email Die E-Mail-Adresse des Benutzers.
-   * @param username Der Benutzername des Benutzers.
-   * @param password Das Passwort des Benutzers.
+   * Temporarily stores the user's registration data in an instance variable.
+   * This data can be used to further process the user after registration.
+   * @param email The user's email address.
+   * @param username The username of the user.
+   * @param password The user's password.
    */
   saveRegistrationData(email: string, username: string, password: string) {
     this.currentRegData = { email, username, password };
   }
 
   /**
-   * Ruft die Daten des aktuell angemeldeten Benutzers aus der Firestore-Datenbank ab.
-   * Verwendet die UID des Benutzers, um dessen Datensatz zu identifizieren.
+   * Retrieves the currently logged in user's information from the Firestore database.
+   * Uses the user's UID to identify their record.
    */
   getCurrentUserData() {
     this.fireService.getCurrentUser(this.currentUserSig()?.uid as string);
   }
 
   /**
-   * Registriert einen neuen Benutzer mit E-Mail, Benutzername, Passwort und Avatar.
-   * Nach erfolgreicher Registrierung wird der Benutzer erstellt, seine Profildaten aktualisiert,
-   * und er in der Firestore-Datenbank gespeichert.
-   * @param email Die E-Mail-Adresse des neuen Benutzers.
-   * @param username Der Benutzername des neuen Benutzers.
-   * @param password Das Passwort des neuen Benutzers.
-   * @param avatar Die URL des Avatars des neuen Benutzers.
-   * @returns Ein Observable, das den Abschluss der Registrierung signalisiert.
+   * Registers a new user with email, username, password and avatar.
+   * After successful registration, the user is created, his profile data is updated,
+   * and it saved in the Firestore database.
+   * @param email The user's email address.
+   * @param username The username of the user.
+   * @param password The user's password.
+   * @param avatar The URL of the new user's avatar.
+   * @returns An Observable that signals registration completion.
    */
   register(
     email: string,
@@ -109,14 +109,14 @@ export class AuthService {
   }
 
   /**
-   * Verarbeitet die Benutzerdaten nach erfolgreicher Registrierung.
-   * Aktualisiert das Profil des Benutzers mit einem Benutzernamen und einem Avatar,
-   * und speichert die neuen Benutzerdaten in der Firestore-Datenbank.
-   * @param response Die Antwort des Registrierungsprozesses, die die Benutzerinformationen enthält.
-   * @param email Die E-Mail-Adresse des Benutzers.
-   * @param username Der Benutzername des Benutzers.
-   * @param password Das Passwort des Benutzers.
-   * @param avatar Die URL des Avatars des Benutzers.
+   * Processes user data after successful registration.
+   * Updates the user's profile with a username and avatar,
+   * and saves the new user data in the Firestore database.
+   * @param response The registration process response containing the user information.
+   * @param email The user's email address..
+   * @param username The username of the user.
+   * @param password The user's password.
+   * @param avatar The URL of the new user's avatar.
    */
   handleUserData(
     response: UserCredential,
@@ -135,6 +135,12 @@ export class AuthService {
     this.saveNewUserInFirestore(email, username, response.user.uid, avatar);
   }
 
+  /**
+   * Updates the authenticated user's profile in Firebase Authentication.
+   * Changes the display name and avatar URL for the current user.
+   * @param username The new display name for the user.
+   * @param avatar The new avatar URL for the user.
+   */
   changeDatainAuthProfile(username: string, avatar: string) {
     let user = this.auth.currentUser;
     if (user) {
@@ -145,27 +151,28 @@ export class AuthService {
     }
   }
 
+  /**
+   * Verifies the user's identity by re-authenticating them with their current password.
+   * If successful, sends an email verification and updates the email address.
+   * @param user The current authenticated user.
+   * @param email The new email address to be set.
+   * @param currentPassword The user's current password for re-authentication.
+   */
   verifyAndUpdateEmail(user: any, email: string, currentPassword: string) {
-    // Re-Authentifiziere den Benutzer
     const credential = EmailAuthProvider.credential(
       user.email,
       currentPassword
     );
-    // console.log(user);
 
     reauthenticateWithCredential(user, credential)
       .then(() => {
-        // console.log('Re-authentication successful.');
-
-        // Sende eine Verifizierungs-E-Mail
+        // Sends a verification email before updating the email address
         sendEmailVerification(user)
           .then(() => {
-            //console.log( 'Verification email sent. Please verify your new email address.' );
-
-            // Nach Verifizierung E-Mail-Adresse aktualisieren
+            // Delays the email update slightly to allow verification processing
             setTimeout(() => {
               this.updateEmail(user, email);
-            }, 1000); // Simulierter Ablauf, in Realität auf tatsächliche Verifizierung warten
+            }, 1000);
           })
           .catch((error) => {
             console.error('Error sending verification email:', error);
@@ -176,26 +183,30 @@ export class AuthService {
       });
   }
 
+  /**
+   * Updates the user's email address in Firebase Authentication.
+   * @param user The current authenticated user.
+   * @param email The new email address to be updated.
+   */
   updateEmail(user: any, email: string) {
-    // Update email
     updateEmail(user, email)
       .then(() => {
         console.log('Email updated successfully.');
       })
       .catch((error) => {
-        // An error occurred
         console.log('error', error);
       });
   }
 
+
   /**
-   * Erstellt und speichert einen neuen Benutzereintrag in der Firestore-Datenbank.
-   * Setzt Standardwerte für neue Benutzer, wie beispielsweise die Rolle und Kanäle.
-   * @param email Die E-Mail-Adresse des Benutzers.
-   * @param username Der Benutzername des Benutzers.
-   * @param uid Die eindeutige Benutzer-ID (UID) des Benutzers.
-   * @param avatar Die URL des Avatars des Benutzers.
-   * @returns Eine Promise, die den Abschluss des Speicherprozesses signalisiert.
+   * Creates and saves a new user entry in the Firestore database.
+   * Sets default values ​​for new users, such as role and channels.
+   * @param email The user's email address.
+   * @param username The username of the user.
+   * @param uid The user's unique user ID (UID).
+   * @param avatar The URL of the user's avatar.
+   * @returns A promise that signals the completion of the save process.
    */
   async saveNewUserInFirestore(
     email: string,
@@ -214,15 +225,15 @@ export class AuthService {
   }
 
   /**
-   * Authentifiziert einen Benutzer mit einer E-Mail-Adresse und einem Passwort.
-   * Nach erfolgreichem Login werden die Benutzerdaten gesetzt, der Status aktualisiert,
-   * und der Benutzer wird auf die Hauptseite weitergeleitet.
-   * @param email Die E-Mail-Adresse des Benutzers.
-   * @param password Das Passwort des Benutzers.
-   * @returns Ein Observable, das den Erfolg oder Fehler des Logins enthält.
+   * Authenticates a user with an email address and password.
+   * After successful login, the user data is set, the status is updated,
+   * and the user will be redirected to the main page.
+   * @param email The user's email address.
+   * @param password The user's password.
+   * @returns An Observable that contains the success or failure of the login.
    */
   login(email: string, password: string) {
-    const promise = signInWithEmailAndPassword(this.auth, email, password).then(      
+    const promise = signInWithEmailAndPassword(this.auth, email, password).then(
       (userCredential) => {
         // Signed in
         this.currentCredentials = userCredential;
@@ -237,8 +248,8 @@ export class AuthService {
   }
 
   /**
-   * Führt einen Gast-Login mit vordefinierten Zugangsdaten aus.
-   * Setzt den Status des Gastes und leitet ihn nach erfolgreichem Login weiter.
+   * Performs a guest login with predefined credentials.
+   * Sets the guest's status and forwards it after a successful login.
    */
   guestLogin() {
     const guestEmail = 'gast@mail.com';
@@ -264,20 +275,18 @@ export class AuthService {
   /////////////////////////////////////////////////////////////////
 
   /**
-   * Meldet den Benutzer über ein Google-Konto an.
-   * Erstellt einen neuen Benutzer in der Firestore-Datenbank, falls dieser noch nicht existiert.
-   * Aktualisiert den Status des Benutzers und leitet ihn auf die Hauptseite weiter.
-   * Bei Fehlern wird eine entsprechende Fehlermeldung gespeichert.
+   * Signs the user in using a Google account.
+   * Creates a new user in the Firestore database if it does not already exist.
+   * Updates the user's status and redirects them to the main page.
+   * In the event of errors, a corresponding error message is saved.
    */
   signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     signInWithPopup(this.auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         this.currentCredentials = result;
-        // The signed-in user info.
         if (
           result.user.email &&
           result.user.displayName &&
@@ -294,34 +303,25 @@ export class AuthService {
           this.router.navigate(['/main']);
         }
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
       })
       .catch((error) => {
-        // Handle Errors here.
         this.errorCode = error.code;
         this.errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
   }
 
   /**
-   * Meldet den aktuellen Benutzer ab und setzt den Status auf "offline".
-   * Entfernt die aktuellen Anmeldedaten und navigiert zur Startseite.
-   * Bei Fehlern wird der Fehler protokolliert.
-   * @throws Fehler beim Setzen des Status oder beim Abmelden.
+   * Logs out the current user and sets the status to "offline".
+   * Removes the current login details and navigates to the home page.
+   * If errors occur, the error is logged.
+   * @throws Error setting status or logging out.
    */
   async signOut() {
     try {
-      // Setze den Benutzerstatus auf "offline", bevor der Logout erfolgt.
       await this.fireService.setUserStatus(this.currentCredentials, 'offline');
-      // Führe den eigentlichen Logout durch.
       await signOut(this.auth);
-      // Navigiere zur Startseite nach erfolgreichem Logout.
       this.router.navigateByUrl('');
     } catch (error) {
       throw error;
@@ -329,8 +329,8 @@ export class AuthService {
   }
 
   /**
-   * Speichert die Daten des aktuellen Benutzers in einer Signalstruktur.
-   * @param user Ein Benutzerobjekt, das Informationen wie E-Mail, Benutzername, UID und Avatar enthält.
+   * Stores the current user's data in a signal structure.
+   * @param user A user object that contains information such as email, username, UID, and avatar.
    */
   setCurrentUserData(user: any) {
     this.currentUserSig.set({
@@ -342,8 +342,8 @@ export class AuthService {
   }
 
   /**
-   * Setzt Standarddaten für einen Gastbenutzer in einer Signalstruktur.
-   * Gastbenutzer haben keine E-Mail-Adresse oder UID.
+   * Sets default data for a guest user in a signal structure.
+   * Guest users do not have an email address or UID.
    */
   setGuestData() {
     this.currentUserSig.set({
@@ -353,38 +353,33 @@ export class AuthService {
       avatar: 'img/avatars/avatar_default.png',
     });
   }
-
   /**
-   * Initialisiert die Authentifizierungsüberwachung und setzt den Benutzerstatus basierend
-   * auf der Authentifizierungsänderung. Falls ein Benutzer eingeloggt ist, werden relevante
-   * Daten geladen. Andernfalls werden die Benutzerdaten entfernt.
+   * Initializes authentication monitoring and sets user status based
+   * on the authentication change. If a user is logged in, relevant
+   * Data loaded. Otherwise the user data will be removed.
    */
   initialize() {
     const auth = getAuth();
 
     onAuthStateChanged(this.auth, (user) => {
-      // Entferne alle Listener, sobald der Auth-Status sich ändert
       this.fireService.unsubscribeAll();
 
       if (user) {
         this.setCurrentUserData(user);
         this.currentUser = user;
-
-        // Lade alle relevanten Daten
         this.fireService.initializeData(user.uid);
       } else {
-        // User wird ausgeloggt
         this.currentUserSig.set(null);
       }
     });
   }
 
-  /**
-   * Sendet eine E-Mail, um das Passwort zurückzusetzen.
-   * Nach erfolgreichem Senden wird der Benutzer zur Startseite weitergeleitet.
-   * @param email Die E-Mail-Adresse, an die die Passwort-Zurücksetzungs-E-Mail gesendet werden soll.
-   * @returns Eine Promise, die entweder erfolgreich ist oder einen Fehler zurückgibt.
-   * @throws Fehler beim Senden der E-Mail.
+/**
+   * Sends an email to reset the password.
+   * After successful submission, user will be redirected to home page.
+   * @param email The email address to send the password reset email to.
+   * @returns A Promise that either succeeds or returns an error.
+   * @throws Error sending email.
    */
   async sendPasswordReset(email: string): Promise<void> {
     try {
@@ -402,7 +397,7 @@ export class AuthService {
   //   if (!user) {
   //     return Promise.reject('Kein Nutzer angemeldet.');
   //   }
-  
+
   //   const credential = EmailAuthProvider.credential(email, password);
   //   return reauthenticateWithCredential(user, credential)
   //     .then(() => {
@@ -418,5 +413,5 @@ export class AuthService {
   //       return Promise.resolve(); // WICHTIG: Verhindert unhandled Promise rejections
   //     });
   // }
-    
+
 }

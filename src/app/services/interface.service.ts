@@ -32,25 +32,25 @@ export class InterfaceService {
   }
 
   /** 
-  * Überprüft, ob das übergebene Objekt vom Typ `User` ist.
-  * @param {User | Channel} obj - Das Objekt, das überprüft werden soll.
-  * @returns {obj is User} `true` wenn `obj` vom Typ `User` ist, sonst `false`.
+  * Checks whether the passed object is of type `User`.
+  * @param {User | Channel} obj - The object to be checked.
+  * @returns {obj is User} `true` if `obj` is of type `User`, otherwise `false`.
   */
   isUser(obj: User | Channel): obj is User {
     return 'uid' in obj;
   }
 
   /** 
-   * Überprüft, ob das übergebene Objekt vom Typ `Channel` ist.
-   * @param {User | Channel} obj - Das Objekt, das überprüft werden soll.
-   * @returns {obj is Channel} `true` wenn `obj` vom Typ `Channel` ist, sonst `false`.
+   * Checks whether the passed object is of type `Channel`.
+   * @param {User | Channel} obj - The object to be checked.
+   * @returns {obj is Channel} `true` if `obj` is of type `Channel`, otherwise `false`.
    */
   isChannel(obj: User | Channel): obj is Channel {
     return 'chaId' in obj;
   }
 
   /**
-   * Umschaltet die Sichtbarkeit des Menüs.
+   * Toggles the visibility of the Sidemenu.
    */
   toggleSidenav() {
     this.menuVisible = !this.menuVisible
@@ -58,22 +58,22 @@ export class InterfaceService {
   }
 
   /**
-   * Ändert den Inhaltstyp, der derzeit angezeigt wird.
-   * @param {'channelChat' | 'newMessage' | 'directMessage'} content - Der Inhaltstyp, der angezeigt werden soll.
+   * Changes the type of content currently displayed.
+   * @param {'channelChat' | 'newMessage' | 'directMessage'} content - The type of content to display.
    */
   changeContent(content: 'channelChat' | 'newMessage' | 'directMessage') {
     this.content = content;
   }
 
   /**
-   * Versteckt das aktuell geöffnete Thread-Fenster.
+   * Hides the currently open thread window.
    */
   closeThread() {
     this.showThread = false;
   }
 
   /**
-   * Öffnet das Thread-Fenster.
+   * Opens the thread window.
    */
   openThread() {
     this.showThread = true;
@@ -81,21 +81,20 @@ export class InterfaceService {
   }
 
   /**
-   * Setzt die aktuelle Nachricht und initialisiert das Anhören von Änderungen im Thread, der dieser Nachricht zugeordnet ist.
-   * @param {Message} currentMsg - Die aktuelle Nachricht.
+   * Sets the current message and initializes the listening method for changes in the thread associated with this message.
+   * @param {Message} currentMsg - The current message.
    */
   setMsg(currentMsg: Message) {
     this.currentMessage = currentMsg;
-
     this.firebaseService.listenToCurrentThreadChanges(currentMsg.thread);
     this.setThread(currentMsg)
     this.openThread()
   }
 
   /**
-   * Setzt den aktuellen Thread auf den zugehörigen Thread der gegebenen Nachricht.
-   * Wenn Nachrichten im Thread vorhanden sind, wird auf die letzte Nachricht gescrollt.
-   * @param {Message} currentMsg - Die aktuelle Nachricht.
+   * Sets the current thread to the corresponding thread of the given message.
+   * If there are messages in the thread, it will scroll to the last message.
+   * @param {Message} currentMsg - The current message.
    */
   setThread(currentMsg: Message) {
     let thread = this.findThread(currentMsg);
@@ -104,34 +103,32 @@ export class InterfaceService {
       index = thread?.messages.length - 1;
       if (thread?.messages.length > 0) {
         this.scrollInChat(thread.messages[index])
-
       }
     }
   }
 
   /**
-   * Sucht eine Nachricht anhand ihrer `msgId` und ruft eine Scroll-Funktion auf, um diese Nachricht im Chatfenster sichtbar zu machen.
-   * @param {Message} msg - Die Nachricht, die gescrollt werden soll.
+   * Finds a message by its `msgId` and calls a scroll function to scroll to this message in the chat window.
+   * @param {Message} msg - The message to scroll to.
    */
   scrollInChat(msg: Message) {
-    // Sende die ID des Ziels an den Service
     const targetMessageId = `${msg.msgId}`;
     this.triggerScrollTo(targetMessageId);
   }
 
   /**
-   * Sucht nach der Elternnachricht für die gegebene Nachricht innerhalb der Threads.
-   * @param {Message} currentMsg - Die aktuelle Nachricht.
-   * @returns {Message | undefined} Die übergeordnete Nachricht, falls vorhanden.
+   * Searches for the parent message for the given message within the threads.
+   * @param {Message} currentMsg - The current message.
+   * @returns {Message | undefined} The parent message, if any.
    */
   findParentMsg(currentMsg: Message) {
     let msg = this.firebaseService.allThreads.find(u => u.id === currentMsg.thread);
   }
 
   /**
-   * Findet den zugehörigen Thread für eine gegebene Nachricht.
-   * @param {any} currentMsg - Die gegebene Nachricht.
-   * @returns {Thread | undefined} Der Thread, falls vorhanden.
+   * Finds the associated thread for a given message.
+   * @param {any} currentMsg - The message given.
+   * @returns {Thread | undefined} The thread, if any.
    */
   findThread(currentMsg?: any) {
     let thread = this.firebaseService.allThreads.find(u => u.id === currentMsg.thread);
@@ -139,16 +136,16 @@ export class InterfaceService {
   }
 
   /**
-   * Bestimmt die letzte Nachricht in einem Thread, die auf die angegebene Nachricht folgt.
-   * @param {Message} currentMessage - Die aktuelle Nachricht.
-   * @returns {Message | undefined} Die neueste Nachricht im Thread oder `undefined`, falls keine Nachrichten vorhanden sind.
+   * Determines the last message in a thread that follows the specified message.
+   * @param {Message} currentMessage - The current message.
+   * @returns {Message | undefined} The latest message in the thread or `undefined` if there are no messages.
    */
   findLastAnswer(currentMessage: Message) {
     let thread = this.findThread(currentMessage);
     let messages = thread?.messages;
 
     if (!messages || messages.length === 0) {
-      return; // Kein Eintrag, kein Ergebnis
+      return; 
     }
 
     return messages.reduce((latest, message) =>
@@ -157,9 +154,9 @@ export class InterfaceService {
   }
 
   /**
-   * Formatiert einen gegebenen Zeitstempel in eine Stunden- und Minuten-Kombination im Format `HH:MM`.
-   * @param {number} [timestamp] - Der Zeitstempel, der formatiert werden soll.
-   * @returns {string} Die Zeit im Format `HH:MM`.
+   * Formats a given timestamp into an hour and minute combination in the format `HH:MM`.
+   * @param {number} [timestamp] - The timestamp to be formatted.
+   * @returns {string} The time in the format `HH:MM`.
    */
   formatTimeFromTimestamp(timestamp?: number): string {
     let time: number;
@@ -168,14 +165,14 @@ export class InterfaceService {
     } else {
       time = 0
     }
-    const date = new Date(time); // Erstelle ein Date-Objekt
-    const hours = date.getHours().toString().padStart(2, '0'); // Stunden, 2-stellig
-    const minutes = date.getMinutes().toString().padStart(2, '0'); // Minuten, 2-stellig
-    return `${hours}:${minutes}`; // Kombiniere Stunden und Minuten
+    const date = new Date(time); 
+    const hours = date.getHours().toString().padStart(2, '0'); 
+    const minutes = date.getMinutes().toString().padStart(2, '0'); 
+    return `${hours}:${minutes}`;
   }
 
   /**
-   * Öffnet ein Dialogfenster zur Anzeige und Verwaltung von Mitgliedern innerhalb eines Kanals.
+   * Opens a dialog window for viewing and managing members within a channel.
    */
   openShowMembersDialog() {
     const dialogRef = this.dialog.open(ShowMemberInChannelComponent, {
@@ -185,8 +182,8 @@ export class InterfaceService {
   }
 
   /**
-   * Überprüft, ob das aktuelle Breakpoint ein `XSmall` oder `Small` ist, und entscheidet, welches Dialogfenster geöffnet werden soll.
-   * Bei kleinem Breakpoint wird `openShowMembersDialog()` aufgerufen, ansonsten `addToChoosenChannelDialog()`.
+   * Checks whether the current breakpoint is an `XSmall` or `Small` and decides which dialog window to open.
+   * If the breakpoint is small, `openShowMembersDialog()` is called, otherwise `addToChoosenChannelDialog()`.
    */
   openChannelDialog() {
     if (this.breakpointObserver.isXSmallOrSmall) {
@@ -197,7 +194,7 @@ export class InterfaceService {
   }
 
   /**
-   * Öffnet ein Dialogfenster zur Auswahl von Benutzern, die einem ausgewählten Kanal hinzugefügt werden sollen.
+   * Opens a dialog for selecting users to add to a selected channel.
    */
   addToChoosenChannelDialog() {
     const dialogRef = this.dialog.open(AddToChoosenChannelComponent, {
@@ -207,19 +204,19 @@ export class InterfaceService {
   }
 
   /**
-   * Ein Subject, das als Kommunikationsmittel für das Scrolling im Chat verwendet wird.
+   * A subject used as a communication tool for chat scrolling.
    */
   private scrollTrigger = new Subject<string>();
 
   /**
-   * Ein Observable, das auf die Änderungen des Scroll-Triggers reagiert.
+   * An Observable that responds to the scroll trigger's changes.
    */
   scrollTrigger$ = this.scrollTrigger.asObservable();
 
   /**
-   * Gibt eine zeitverzögerte Nachricht an das Scroll-Subject, um zum entsprechenden Element zu scrollen.
-   * Diese Funktion wartet 500 ms, bevor sie die Nachricht sendet, um ein flüssiges Scrollen zu gewährleisten.
-   * @param {string} elementId - Die ID des Elements, zu dem gescrollt werden soll.
+   * Sends a time-delayed message to the Scroll Subject to scroll to the corresponding element.
+   * This feature waits 500ms before sending the message to ensure smooth scrolling.
+   * @param {string} elementId - The ID of the element to scroll to.
    */
   triggerScrollTo(elementId: string) {
     setTimeout(() => {
@@ -227,6 +224,9 @@ export class InterfaceService {
     }, 500);
   }
 
+  /**
+   * focused the textarea of the current opened thread
+   */
   focusThreadTextArea() {
     setTimeout(() => {
       const textareas = document.querySelectorAll('textarea');
@@ -236,4 +236,5 @@ export class InterfaceService {
       }
     }, 0); 
   }
+  
 }
