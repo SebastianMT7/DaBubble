@@ -277,8 +277,8 @@ export class FirebaseService {
    */
   async addToWelcomeChannel(user:any){
     try {
-      const channelRef = doc(this.firestore, `channels/ynn3Uv048rQzNGdlXrIp`);
-      await updateDoc(channelRef, { users: arrayUnion(user.uid) , chaId: `ynn3Uv048rQzNGdlXrIp` });
+      const channelRef = doc(this.firestore, `channels/anTUfgBiM4YRusWfKwaV`);
+      await updateDoc(channelRef, { users: arrayUnion(user.uid) , chaId: `anTUfgBiM4YRusWfKwaV` });
 
     } catch (error) {
     }
